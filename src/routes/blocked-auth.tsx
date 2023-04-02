@@ -6,7 +6,7 @@ import { getAccessToken } from "~/helper";
 
 export const BlockedAuth = () => {
   const isAuth = getAccessToken();
-   console.log('isAuth:' + isAuth)
+  console.log('isAuth:' + isAuth)
 
-  return true ? <Navigate to={navigationFn.HOME} replace /> : <Outlet />;
+  return false ? <Navigate to={navigationFn.HOME} replace /> : <Outlet />;
 };

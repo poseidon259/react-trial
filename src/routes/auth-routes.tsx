@@ -1,15 +1,16 @@
-import { RouteObject } from "react-router";
+import { RouteObject } from 'react-router'
 
-import { BlockedAuth } from "./blocked-auth";
-import { BlankPage, LoginPage } from "~/modules";
-import { AuthLayout } from "~/layouts";
+import { BlockedAuth } from './blocked-auth'
+import { BlankPage, ForgotPasswordPage, LoginPage } from '~/modules'
+import { AuthLayout } from '~/layouts'
+import RegisterForm from '~/modules/auth/forms/register-form'
 
 export const authRoutes: RouteObject = {
   element: <BlockedAuth />,
   errorElement: <BlankPage />,
   children: [
     {
-      element: <AuthLayout />,
+      // element: <AuthLayout />,
       children: [
         {
           path: '/login',
@@ -17,11 +18,19 @@ export const authRoutes: RouteObject = {
         },
         {
           path: '/forgot-password',
-          element: <></>
+          element: (
+            <>
+              <ForgotPasswordPage />
+            </>
+          )
         },
         {
-          path: '/reset-password',
-          element: <></>
+          path: '/register',
+          element: (
+            <>
+              <RegisterForm />
+            </>
+          )
         },
         {
           path: 'verify-code',

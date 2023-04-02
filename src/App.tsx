@@ -1,4 +1,4 @@
-import { RouterProvider} from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/provider'
 
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -20,12 +20,12 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={themeOverride}>
-          <ToastProvider>
-            <RouterProvider router={router} />
-          </ToastProvider>
+          {/* <ToastProvider> */}
+          <RouterProvider router={router} />
+          {/* </ToastProvider> */}
         </ChakraProvider>
       </QueryClientProvider>
-      
+
     </>
   )
 }
