@@ -15,26 +15,26 @@ const forgotPasswordFn = (body: TForgot) =>
 
 export const useMutationForgotPassword = ({ email }: { email: string }) => {
   const navigate = useNavigate();
-  const { toastSuccess, toastFail } = useCustomToast();
+  const { toastSuccess, toastError } = useCustomToast();
 
   return useMutation({
     mutationFn: forgotPasswordFn,
     mutationKey: "forgot",
-    onSuccess: () => {
-      toastSuccess({
-        title: "Code sent to your email",
-      });
-      navigate(navigationFn.VERIFY_CODE, {
-        state: {
-          email,
-        },
-      });
-    },
+    // onSuccess: () => {
+    //   toastSuccess({
+    //     title: "Code sent to your email",
+    //   });
+    //   navigate(navigationFn.VERIFY_CODE, {
+    //     state: {
+    //       email,
+    //     },
+    //   });
+    // },
 
-    onError: (error: any) => {
-      toastFail({
-        title: error.response.data.errors,
-      });
-    },
+    // onError: (error: any) => {
+    //   toastFail({
+    //     title: error.response.data.errors,
+    //   });
+    // },
   });
 };

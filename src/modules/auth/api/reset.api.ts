@@ -17,22 +17,22 @@ const resetPasswordFn = (body: TReset) =>
   trackPromise(axiosClient.post("/auth/admin/resetPassword", body));
 
 export const useMutationResetPassword = () => {
-  const { toastSuccess, toastFail } = useCustomToast();
+  const { toastSuccess, toastError } = useCustomToast();
   const navigate = useNavigate();
 
   return useMutation({
     mutationFn: resetPasswordFn,
     mutationKey: "resetPassword",
-    onSuccess: () => {
-      toastSuccess({
-        title: "Reset password successfully",
-      });
-      navigate(navigationFn.LOGIN);
-    },
-    onError: () => {
-      toastFail({
-        title: "Something when wrong, please try again",
-      });
-    },
+    // onSuccess: () => {
+    //   toastSuccess({
+    //     title: "Reset password successfully",
+    //   });
+    //   navigate(navigationFn.LOGIN);
+    // },
+    // onError: () => {
+    //   toastFail({
+    //     title: "Something when wrong, please try again",
+    //   });
+    // },
   });
 };

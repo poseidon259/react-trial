@@ -23,20 +23,20 @@ const uploadAudioFn = (audio: FormData): Promise<TResponse<TAudioResponse>> =>
   );
 
 export const useMutationUploadAudio = () => {
-  const { toastSuccess, toastFail } = useCustomToast();
+  const { toastSuccess, toastError } = useCustomToast();
 
   return useMutation({
     mutationKey: "upload-audio",
     mutationFn: uploadAudioFn,
-    onSuccess: () => {
-      toastSuccess({
-        title: "Upload file successfully",
-      });
-    },
-    onError: () => {
-      toastFail({
-        title: "Upload file failed",
-      });
-    },
+    // onSuccess: () => {
+    //   toastSuccess({
+    //     title: "Upload file successfully",
+    //   });
+    // },
+    // onError: () => {
+    //   toastError({
+    //     title: "Upload file failed",
+    //   });
+    // },
   });
 };

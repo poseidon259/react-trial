@@ -21,19 +21,19 @@ const uploadImageFn = (file: FormData): Promise<Response> =>
   );
 
 export const useMutationUploadImage = () => {
-  const { toastSuccess, toastFail } = useCustomToast();
+  const { toastSuccess, toastError } = useCustomToast();
   return useMutation({
     mutationKey: "upload-image",
     mutationFn: uploadImageFn,
-    onSuccess: (data: Response) => {
-      toastSuccess({
-        title: "Upload file successfully",
-      });
-    },
-    onError: () => {
-      toastFail({
-        title: "Upload file failed",
-      });
-    },
+    // onSuccess: (data: Response) => {
+    //   toastSuccess({
+    //     title: "Upload file successfully",
+    //   });
+    // },
+    // onError: () => {
+    //   toastFail({
+    //     title: "Upload file failed",
+    //   });
+    // },
   });
 };

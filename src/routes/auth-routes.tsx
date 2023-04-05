@@ -25,7 +25,7 @@ export const authRoutes: RouteObject = {
           element: <RegisterForm />
         },
         {
-          path: '/verify-code',
+          path: '/logout',
           element: <></>
         },
         {

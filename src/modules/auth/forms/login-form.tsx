@@ -4,7 +4,6 @@ import {
   Checkbox,
   Container,
   Divider,
-  FormControl,
   FormLabel,
   Heading,
   HStack,
@@ -13,9 +12,7 @@ import {
   InputGroup,
   InputRightElement,
   Stack,
-  Text,
-  useDisclosure,
-  useMergeRefs
+  Text
 } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
@@ -48,13 +45,14 @@ export const LoginForm = () => {
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting, errors},
+    formState: { errors }
   } = useForm<TLogin>({
     defaultValues: initialValues,
     resolver: zodResolver(LoginFormSchema)
   })
 
-  const { mutate } = useMutationLogin()
+  const { mutate, isLoading } = useMutationLogin()
+
   const onSubmit = (data: TLogin) => {
     data.type = LOGIN_EMAIL
     data.system = SYSTEM_USER
@@ -93,7 +91,7 @@ export const LoginForm = () => {
               <Controller
                 name='email'
                 control={control}
-                render={({field}) => (
+                render={({ field }) => (
                   <Box w='100%'>
                     <FormLabel htmlFor='email'>Email</FormLabel>
                     <Input {...field} id='email' type='text' name='email' />
@@ -105,7 +103,7 @@ export const LoginForm = () => {
               <Controller
                 name='password'
                 control={control}
-                render={({field}) => (
+                render={({ field }) => (
                   <Box w='100%'>
                     <FormLabel htmlFor='password'>Password</FormLabel>
                     <InputGroup>
@@ -136,7 +134,7 @@ export const LoginForm = () => {
                 backgroundColor='primary'
                 _hover={{ bg: 'white', color: 'primary' }}
                 type='submit'
-                isLoading={isSubmitting}
+                isLoading={isLoading}
                 w='100%'
               >
                 Sign in

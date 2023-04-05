@@ -18,21 +18,21 @@ const changePasswordFn = (body: TChangePassword) =>
 
 export const useMutationChangePassword = () => {
   const navigate = useNavigate();
-  const { toastSuccess, toastFail } = useCustomToast();
+  const { toastSuccess, toastError } = useCustomToast();
 
   return useMutation({
     mutationFn: changePasswordFn,
     mutationKey: "change-password",
-    onSuccess: () => {
-      navigate(navigationFn.HOME);
-      toastSuccess({
-        title: "Change password successfully",
-      });
-    },
-    onError: () => {
-      toastFail({
-        title: "Something when wrong, please try again",
-      });
-    },
+    // onSuccess: () => {
+    //   navigate(navigationFn.HOME);
+    //   toastSuccess({
+    //     title: "Change password successfully",
+    //   });
+    // },
+    // onError: () => {
+    //   toastFail({
+    //     title: "Something when wrong, please try again",
+    //   });
+    // },
   });
 };
