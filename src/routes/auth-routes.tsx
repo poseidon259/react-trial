@@ -1,7 +1,7 @@
 import { RouteObject } from 'react-router'
 
 import { BlockedAuth } from './blocked-auth'
-import { BlankPage, ForgotPasswordPage, LoginPage } from '~/modules'
+import { BlankPage, ForgotPasswordPage, LoginPage, ResetPasswordPage } from '~/modules'
 import { AuthLayout } from '~/layouts'
 import RegisterForm from '~/modules/auth/forms/register-form'
 
@@ -18,23 +18,19 @@ export const authRoutes: RouteObject = {
         },
         {
           path: '/forgot-password',
-          element: (
-            <>
-              <ForgotPasswordPage />
-            </>
-          )
+          element: <ForgotPasswordPage />
         },
         {
           path: '/register',
-          element: (
-            <>
-              <RegisterForm />
-            </>
-          )
+          element: <RegisterForm />
         },
         {
-          path: 'verify-code',
+          path: '/verify-code',
           element: <></>
+        },
+        {
+          path: '/reset-password',
+          element: <ResetPasswordPage />
         }
       ]
     }

@@ -1,10 +1,10 @@
 import { RouterProvider } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/provider'
-
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { router } from './routes'
 import { themeOverride } from './libs'
-import { ToastProvider } from '@chakra-ui/react'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,12 +20,10 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={themeOverride}>
-          {/* <ToastProvider> */}
+          <ToastContainer />
           <RouterProvider router={router} />
-          {/* </ToastProvider> */}
         </ChakraProvider>
       </QueryClientProvider>
-
     </>
   )
 }

@@ -54,15 +54,15 @@ export const ForgotPasswordform = () => {
       borderRadius={8}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Text variant="headingLight">Forgot password</Text>
+      <Text variant="muted">Forgot password</Text>
       <Controller
         name="email"
         control={control}
         render={({ field: { value, onChange } }) => (
           <Box w="100%">
-            <Text variant="menuLabelLight" paddingBottom={4}>
-              Email{" "}
-              <Text as="span" color="white">
+            <Text variant="muted" paddingBottom={4}>
+              Email
+              <Text as="span" color="muted">
                 *
               </Text>
             </Text>

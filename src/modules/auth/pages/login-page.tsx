@@ -1,6 +1,9 @@
-import LoginForm from "../forms/login-form";
+import { LoginForm } from "../forms";
 
 export const LoginPage = () => {
-  console.log('first')
-  return <LoginForm />;
+  return (
+    <>
+      <LoginForm />
+    </>
+  );
 };

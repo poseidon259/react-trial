@@ -6,7 +6,6 @@ import { getAccessToken } from "~/helper";
 
 export function RequiredAuth() {
   const isAuth = getAccessToken();
-  console.log('isAuth:' + isAuth);
 
   return false ? <Outlet /> : <Navigate to={navigationFn.LOGIN} replace />;
 }
