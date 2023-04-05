@@ -23,6 +23,8 @@ import { useMutationLogin } from '../api'
 import { useState } from 'react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { LOGIN_EMAIL, SYSTEM_USER } from '~/configs'
+import { useLocation, useNavigate } from 'react-router'
+import { navigationFn } from '~/routes'
 
 type TLogin = {
   email: string
@@ -32,8 +34,10 @@ type TLogin = {
 }
 
 export const LoginForm = () => {
+  const navigate = useNavigate()
+
   const initialValues = {
-    email: '',
+    email: localStorage.getItem('email') ?? '',
     password: '',
     type: 0,
     system: 0
@@ -58,6 +62,11 @@ export const LoginForm = () => {
     data.system = SYSTEM_USER
     mutate(data)
   }
+
+  const handleRegister = () => {
+    navigate(navigationFn.REGISTER)
+  }
+
   return (
     <Container
       as='form'
@@ -73,7 +82,7 @@ export const LoginForm = () => {
             <Heading size={{ base: 'xs', md: 'sm' }}>Log in to your account</Heading>
             <HStack spacing='1' justify='center'>
               <Text color='#4A5568'>Don't have an account?</Text>
-              <Button variant='link' colorScheme='blue'>
+              <Button variant='link' colorScheme='blue' onClick={handleRegister}>
                 <Text color='muted'>Sign up</Text>
               </Button>
             </HStack>

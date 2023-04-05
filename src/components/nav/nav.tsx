@@ -8,8 +8,8 @@ import { navigationFn } from '~/routes'
 export const Nav = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true })
   const isLogin = localStorage.getItem('user')
-  const navigate = useNavigate();
-  const { toastSuccess, toastError } = useCustomToast();
+  const navigate = useNavigate()
+  const { toastSuccess, toastError } = useCustomToast()
 
   const handleLogout = () => {
     if (isLogin) {
@@ -18,6 +18,14 @@ export const Nav = () => {
       navigate(navigationFn.LOGIN)
     } else {
       toastError('You are not logged in')
+    }
+  }
+
+  const handleLogin = () => {
+    if (isLogin) {
+      toastError('You are already logged in')
+    } else {
+      navigate(navigationFn.LOGIN)
     }
   }
 
@@ -34,13 +42,20 @@ export const Nav = () => {
                 ))}
               </ButtonGroup>
               <HStack spacing='3'>
-                <Button variant='ghost' border='1px solid #CBD5E0'>
-                  Sign in
-                </Button>
-                <Button variant='primary'>Sign up</Button>
-                <Button variant='ghost' onClick={handleLogout}>
-                  Logout
-                </Button>
+                {isLogin ? (
+                  <Button variant='ghost' onClick={handleLogout}>
+                    Logout
+                  </Button>
+                ) : (
+                  <>
+                    <Button variant='ghost' border='1px solid #CBD5E0'>
+                      Sign up
+                    </Button>
+                    <Button variant='primary' onClick={handleLogin}>
+                      Sign in
+                    </Button>
+                  </>
+                )}
               </HStack>
             </Flex>
           ) : (
