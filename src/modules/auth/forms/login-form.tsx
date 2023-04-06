@@ -23,7 +23,7 @@ import { useMutationLogin } from '../api'
 import { useState } from 'react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import { LOGIN_EMAIL, SYSTEM_USER } from '~/configs'
-import { useLocation, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import { navigationFn } from '~/routes'
 
 type TLogin = {
