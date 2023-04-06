@@ -26,10 +26,10 @@ export const PriceTag = (props: PriceTagProps) => {
   const { price, currency, salePrice, rootProps, priceProps, salePriceProps } = props
   return (
     <HStack spacing='1' {...rootProps}>
+      {salePrice && <SalePrice {...salePriceProps}>{formatPrice(salePrice, { currency })}</SalePrice>}
       <Price isOnSale={!!salePrice} textProps={priceProps}>
         {formatPrice(price, { currency })}
       </Price>
-      {salePrice && <SalePrice {...salePriceProps}>{formatPrice(salePrice, { currency })}</SalePrice>}
     </HStack>
   )
 }

@@ -4,8 +4,8 @@ import { products } from './_data'
 import { ProductGrid } from './product-grid'
 
 export const ProductList = () => (
-  <Box maxW='7xl' mx='auto'  py={{ base: '6', md: '8', lg: '12' }}>
-    <Text fontSize='xl' fontWeight='bold' mb={4}>
+  <Box maxW='7xl' py={{ base: '6', md: '8', lg: '12' }}>
+    <Text fontSize='xl' fontWeight='bold'>
       Sản phẩm
     </Text>
     <ProductGrid>

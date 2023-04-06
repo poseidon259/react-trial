@@ -1,7 +1,8 @@
 import { Box, Flex, Spinner } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { Category } from '~/components/category/category'
-import { ProductList } from '~/components/product/product'
+import { ProductDetail } from '~/components/product-detail/product-detail'
+import { ProductList } from '~/components/product-list/product-list'
 import { SlickSlider } from '~/components/slick/slick-slider'
 import { DefaultLayout } from '~/layouts'
 import axiosClient from '~/libs/axios/axiosClient'
@@ -46,6 +47,7 @@ export const HomePage = () => {
           )}
 
           <ProductList />
+          <ProductDetail />
         </Box>
       </DefaultLayout>
     </>
