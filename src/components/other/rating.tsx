@@ -1,4 +1,4 @@
-import { HStack, Icon, StackProps, Text, useColorModeValue } from '@chakra-ui/react'
+import { HStack, Icon, StackProps, useColorModeValue } from '@chakra-ui/react'
 import { FaStar } from 'react-icons/fa'
 
 interface Props {

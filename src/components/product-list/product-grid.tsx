@@ -1,14 +1,13 @@
 import { SimpleGrid, SimpleGridProps } from '@chakra-ui/react'
-import { Children, isValidElement, useMemo } from 'react'
+import { useMemo } from 'react'
 
 export const ProductGrid = (props: SimpleGridProps) => {
   const columns = useMemo(() => {
-    const count = Children.toArray(props.children).filter(isValidElement).length
     return {
-      base: Math.min(1, count),
-      md: Math.min(2, count),
-      lg: Math.min(3, count),
-      xl: Math.min(4, count)
+      base: Math.min(1, 1),
+      md: Math.min(2, 2),
+      lg: Math.min(3, 3),
+      xl: Math.min(4, 4)
     }
   }, [props.children])
 

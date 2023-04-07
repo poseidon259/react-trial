@@ -1,6 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react'
-import { Footer } from '~/components/footer/footer'
-import { Nav } from '~/components/nav/nav'
+import { Footer } from '~/components/other/footer'
+import { Nav } from '~/components/other/nav'
 
 export const DefaultLayout = ({ children }: any) => {
   return (

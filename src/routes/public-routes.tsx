@@ -7,6 +7,6 @@ export const publicRoutes: RouteObject = {
     {
       index: true,
       element: <HomePage />
-    }
+    },
   ]
 }

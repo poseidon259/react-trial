@@ -5,6 +5,7 @@ import { authRoutes } from './auth-routes'
 import { lazyImport } from '~/helper'
 import { HomePage } from '~/modules'
 import { publicRoutes } from './public-routes'
+import { productRoutes } from './product-routes'
 
 // const { PrivacyPocily } = lazyImport(
 //   () => import("@/modules"),
@@ -19,4 +20,5 @@ export const router = createBrowserRouter([
   { ...authRoutes },
   // { ...adminRoutes },
   { ...publicRoutes},
+  { ...productRoutes }
 ])
