@@ -18,12 +18,12 @@ export const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [limit, setLimit] = useState(4)
 
-  const onPageChange = (pageNumber: any) => {
+  const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
   }
 
   useEffect(() => {
-    axiosClient.get('/banner/list').then((res: any) => {
+    axiosClient.get('/list_banner').then((res: any) => {
       setBanners(res.data)
       setIsLoadingBanner(false)
     })
@@ -54,7 +54,7 @@ export const HomePage = () => {
               <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
             </Flex>
           ) : (
-            <SlickSlider banners={banners} />
+            <SlickSlider images={banners} />
           )}
           {isLoadingCategory ? (
             <Flex justifyContent='center' alignItems='center' mx='200px' pt='20px'>

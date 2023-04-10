@@ -7,6 +7,8 @@ export const navigationFn = {
   VERIFY_CODE: '/verify-code',
   RESET_PASSWORD: '/reset-password',
 
+  DETAIL_PRODUCT: '/product/:id',
+
   HOME_INFORMATION: '/home',
   CHANGE_PASSWORD: '/admin/change-password',
 

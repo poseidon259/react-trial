@@ -1,168 +1,193 @@
-import { z } from "zod";
+import { z } from 'zod'
+
+export const CommentFormClientSchema = z.object({
+  content: z
+    .string({
+      required_error: 'Content is required',
+      invalid_type_error: 'Invalid content'
+    })
+    .trim()
+    .min(10, {
+      message: 'The content field can only enter more than 10 characters'
+    })
+    .max(500, {
+      message: 'The content field can only enter less than 500 characters'
+    }),
+  rating: z
+    .number({
+      required_error: 'Rating is required',
+      invalid_type_error: 'Invalid rating'
+    })
+    .min(1, {
+      message: 'The rating field can only enter more than 1 characters'
+    })
+    .max(5, {
+      message: 'The rating field can only enter less than 5 characters'
+    })
+})
 
 export const LoginFormSchema = z.object({
   email: z
     .string({
-      required_error: "Email is required",
-      invalid_type_error: "Invalid email",
+      required_error: 'Email is required',
+      invalid_type_error: 'Invalid email'
     })
     .trim()
     .max(100, {
-      message: "The email field can only enter less than 100 characters",
+      message: 'The email field can only enter less than 100 characters'
     })
     .email(),
   password: z
     .string({
-      required_error: "Password is required",
-      invalid_type_error: "Invalid password",
+      required_error: 'Password is required',
+      invalid_type_error: 'Invalid password'
     })
     .trim()
     .min(8, {
-      message: "The password field can only enter more than 4 characters",
+      message: 'The password field can only enter more than 4 characters'
     })
     .max(32, {
-      message: "The password field can only enter less than 32 characters",
-    }),
-});
+      message: 'The password field can only enter less than 32 characters'
+    })
+})
 
 export const RegisterFormSchema = z.object({
   email: z
     .string({
-      required_error: "Email is required",
-      invalid_type_error: "Invalid email",
+      required_error: 'Email is required',
+      invalid_type_error: 'Invalid email'
     })
     .trim()
     .max(100, {
-      message: "The email field can only enter less than 100 characters",
+      message: 'The email field can only enter less than 100 characters'
     })
     .email(),
   password: z
     .string({
-      required_error: "Password is required",
-      invalid_type_error: "Invalid password",
+      required_error: 'Password is required',
+      invalid_type_error: 'Invalid password'
     })
     .trim()
     .min(8, {
-      message: "The password field can only enter more than 8 characters",
+      message: 'The password field can only enter more than 8 characters'
     })
     .max(32, {
-      message: "The password field can only enter less than 32 characters",
+      message: 'The password field can only enter less than 32 characters'
     }),
   first_name: z
     .string({
-      required_error: "First name is required",
-      invalid_type_error: "Invalid first name",
+      required_error: 'First name is required',
+      invalid_type_error: 'Invalid first name'
     })
     .trim()
     .max(100, {
-      message: "The first name field can only enter less than 100 characters",
+      message: 'The first name field can only enter less than 100 characters'
     }),
   last_name: z
     .string({
-      required_error: "Last name is required",
-      invalid_type_error: "Invalid last name",
+      required_error: 'Last name is required',
+      invalid_type_error: 'Invalid last name'
     })
     .trim()
     .max(100, {
-      message: "The last name field can only enter less than 100 characters",
-    }),
-});
-
+      message: 'The last name field can only enter less than 100 characters'
+    })
+})
 
 export const ForgotPasswordFormSchema = z.object({
   email: z
     .string({
-      required_error: "Email is required",
-      invalid_type_error: "Invalid email",
+      required_error: 'Email is required',
+      invalid_type_error: 'Invalid email'
     })
     .trim()
     .max(48, {
-      message: "Email max is 48",
+      message: 'Email max is 48'
     })
-    .email(),
-});
+    .email()
+})
 
 export const ResetPasswordFormSchema = z
   .object({
     code: z
       .string({
-        required_error: "Code is required",
+        required_error: 'Code is required'
       })
       .length(6, {
-        message: "Invalid Code",
+        message: 'Invalid Code'
       }),
     newPassword: z
       .string({
-        required_error: "New password is required",
-        invalid_type_error: "Invalid password",
+        required_error: 'New password is required',
+        invalid_type_error: 'Invalid password'
       })
       .min(8, {
-        message: "Password min is 8",
+        message: 'Password min is 8'
       }),
     confirmPassword: z
       .string({
-        required_error: "Confirm password is required",
-        invalid_type_error: "Invalid password",
+        required_error: 'Confirm password is required',
+        invalid_type_error: 'Invalid password'
       })
       .min(8, {
-        message: "Password min is 8",
-      }),
+        message: 'Password min is 8'
+      })
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Password does not match",
-    path: ["confirmPassword"],
-  });
+    message: 'Password does not match',
+    path: ['confirmPassword']
+  })
 
 export const ChangePasswordFormSchema = z
   .object({
     oldPassword: z
       .string({
-        required_error: "New password is required",
-        invalid_type_error: "Invalid password",
+        required_error: 'New password is required',
+        invalid_type_error: 'Invalid password'
       })
       .trim()
       .min(4, {
-        message: "The password field can only enter more than 4 characters",
+        message: 'The password field can only enter more than 4 characters'
       })
       .max(32, {
-        message: "The password field can only enter less than 32 characters",
+        message: 'The password field can only enter less than 32 characters'
       }),
     newPassword: z
       .string({
-        required_error: "New password is required",
-        invalid_type_error: "Invalid password",
+        required_error: 'New password is required',
+        invalid_type_error: 'Invalid password'
       })
       .trim()
       .min(4, {
-        message: "The password field can only enter more than 4 characters",
+        message: 'The password field can only enter more than 4 characters'
       })
       .max(32, {
-        message: "The password field can only enter less than 32 characters",
+        message: 'The password field can only enter less than 32 characters'
       }),
     confirmPassword: z
       .string({
-        required_error: "Confirm password is required",
-        invalid_type_error: "Invalid password",
+        required_error: 'Confirm password is required',
+        invalid_type_error: 'Invalid password'
       })
       .trim()
       .min(4, {
-        message: "The password field can only enter more than 4 characters",
+        message: 'The password field can only enter more than 4 characters'
       })
       .max(32, {
-        message: "The password field can only enter less than 32 characters",
-      }),
+        message: 'The password field can only enter less than 32 characters'
+      })
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Password does not match",
-    path: ["confirmPassword"],
-  });
+    message: 'Password does not match',
+    path: ['confirmPassword']
+  })
 
 export const VerifyPinCodeFormSchema = z.object({
   code: z
     .string({
-      required_error: "Pin code is required",
+      required_error: 'Pin code is required'
     })
     .length(6, {
-      message: "Pin code must be 6 characters",
-    }),
-});
+      message: 'Pin code must be 6 characters'
+    })
+})

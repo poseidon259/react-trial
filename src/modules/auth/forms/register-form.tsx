@@ -74,10 +74,10 @@ export default function RegisterForm() {
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
-            Sign up
+            Đăng ký
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool features ✌️
+            để trải nghiệm nhiều tính năng khác ✌️
           </Text>
         </Stack>
         <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
@@ -90,7 +90,7 @@ export default function RegisterForm() {
                   render={({ field }) => (
                     <Box w='100%'>
                       <FormControl id='first_name' isRequired>
-                        <FormLabel htmlFor='first_name'>First Name</FormLabel>
+                        <FormLabel htmlFor='first_name'>Họ</FormLabel>
                         <Input {...field} id='first_name' type='text' name='first_name' />
                         {errors.first_name && <Text variant='error'>{errors.first_name.message}</Text>}
                       </FormControl>
@@ -105,7 +105,7 @@ export default function RegisterForm() {
                   render={({ field }) => (
                     <Box w='100%'>
                       <FormControl id='last_name' isRequired>
-                        <FormLabel htmlFor='last_name'>Last Name</FormLabel>
+                        <FormLabel htmlFor='last_name'>Tên</FormLabel>
                         <Input {...field} id='last_name' type='text' name='last_name' />
                         {errors.last_name && <Text variant='error'>{errors.last_name.message}</Text>}
                       </FormControl>
@@ -133,7 +133,7 @@ export default function RegisterForm() {
               render={({ field }) => (
                 <Box w='100%'>
                   <FormControl id='password' isRequired>
-                    <FormLabel htmlFor='password'>Password</FormLabel>
+                    <FormLabel htmlFor='password'>Mật khẩu</FormLabel>
                     <InputGroup>
                       <Input {...field} type={showPassword ? 'text' : 'password'} />
                       <InputRightElement>
@@ -161,14 +161,14 @@ export default function RegisterForm() {
                 }}
                 isLoading={isLoading}
               >
-                Sign up
+                Đăng ký
               </Button>
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Already a user?{' '}
+                Đã có tài khoản?{' '}
                 <Link color='primary' onClick={handleLogin}>
-                  Login
+                  Đăng nhập
                 </Link>
               </Text>
             </Stack>

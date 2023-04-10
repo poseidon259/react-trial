@@ -24,7 +24,7 @@ export const useMutationLogin = () => {
     onSuccess: (data) => {
       setStorage("user", data?.data);
       navigate(navigationFn.HOME);
-      toastSuccess("Login successfully");
+      toastSuccess("Đăng nhập thành công");
     },
 
     onError: (error: any) => {

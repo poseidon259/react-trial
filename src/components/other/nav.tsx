@@ -14,26 +14,34 @@ export const Nav = () => {
   const handleLogout = () => {
     if (isLogin) {
       localStorage.removeItem('user')
-      toastSuccess('Logout success')
+      toastSuccess('Đăng xuất thành công')
       navigate(navigationFn.LOGIN)
     } else {
-      toastError('You are not logged in')
+      toastError('Bạn chưa đăng nhập')
     }
   }
 
   const handleLogin = () => {
     if (isLogin) {
-      toastError('You are already logged in')
+      toastError('Bạn đã đăng nhập')
     } else {
       navigate(navigationFn.LOGIN)
     }
+  }
+
+  const handleRegister = () => {
+    navigate(navigationFn.REGISTER)
+  }
+
+  const handleToHome = () => {
+    navigate(navigationFn.HOME)
   }
 
   return (
     <Box as='section' pb={{ base: '12', md: '12' }}>
       <Box as='nav' bg='bg-surface' boxShadow='sm'>
         <HStack py={{ base: '12', md: '6' }} px={{ base: '12', md: '12' }} spacing='10' justify='space-between'>
-          <Logo />
+          <Logo onClick={ handleToHome } cursor={'pointer'} />
           {isDesktop ? (
             <Flex justify='space-between' flex='1'>
               <ButtonGroup variant='link' spacing='8'>
@@ -44,15 +52,15 @@ export const Nav = () => {
               <HStack spacing='3'>
                 {isLogin ? (
                   <Button variant='ghost' onClick={handleLogout}>
-                    Logout
+                    Đăng xuất
                   </Button>
                 ) : (
                   <>
-                    <Button variant='ghost' border='1px solid #CBD5E0'>
-                      Sign up
+                    <Button variant='ghost' border='1px solid #CBD5E0' onClick={handleRegister}>
+                      Đăng ký
                     </Button>
                     <Button variant='primary' onClick={handleLogin}>
-                      Sign in
+                      Đăng nhập
                     </Button>
                   </>
                 )}

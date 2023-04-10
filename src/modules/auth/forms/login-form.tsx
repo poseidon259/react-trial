@@ -79,11 +79,11 @@ export const LoginForm = () => {
         <Stack spacing='6'>
           <Logo />
           <Stack spacing={{ base: '2', md: '3' }} textAlign='center'>
-            <Heading size={{ base: 'xs', md: 'sm' }}>Log in to your account</Heading>
+            <Heading size={{ base: 'xs', md: 'sm' }}>Đăng nhập bằng tài khoản của bạn</Heading>
             <HStack spacing='1' justify='center'>
-              <Text color='#4A5568'>Don't have an account?</Text>
+              <Text color='#4A5568'>Bạn chưa có tài khoản?</Text>
               <Button variant='link' colorScheme='blue' onClick={handleRegister}>
-                <Text color='muted'>Sign up</Text>
+                <Text color='muted'>Đăng ký</Text>
               </Button>
             </HStack>
           </Stack>
@@ -114,7 +114,7 @@ export const LoginForm = () => {
                 control={control}
                 render={({ field }) => (
                   <Box w='100%'>
-                    <FormLabel htmlFor='password'>Password</FormLabel>
+                    <FormLabel htmlFor='password'>Mật khẩu</FormLabel>
                     <InputGroup>
                       <Input {...field} type={showPassword ? 'text' : 'password'} />
                       <InputRightElement>
@@ -132,9 +132,9 @@ export const LoginForm = () => {
               />
             </Stack>
             <HStack justify='space-between'>
-              <Checkbox defaultChecked>Remember me</Checkbox>
+              <Checkbox defaultChecked>Nhớ tài khoản</Checkbox>
               <Button variant='link' colorScheme='blue' size='sm'>
-                Forgot password?
+                Quên mật khẩu?
               </Button>
             </HStack>
             <Stack spacing='6'>
@@ -146,12 +146,12 @@ export const LoginForm = () => {
                 isLoading={isLoading}
                 w='100%'
               >
-                Sign in
+                Đăng nhập
               </Button>
               <HStack>
                 <Divider />
                 <Text fontSize='sm' whiteSpace='nowrap' color='muted'>
-                  or continue with
+                  Đăng nhập qua tài khoản mạng xã hội
                 </Text>
                 <Divider />
               </HStack>

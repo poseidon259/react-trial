@@ -43,7 +43,7 @@ export const Pagination = (props: any) => {
   }
 
   return (
-    <Flex align={'center'} justify={'center'} mt={4}>
+    <Flex align={'center'} justify={'center'} mt={4} pb={'20px'}>
       <Button size={'sm'} variant={'outline'} onClick={handleClickPrev} mr={2} isDisabled={isFirstPage}>
         <Icon as={BsArrowLeft} />
       </Button>

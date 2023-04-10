@@ -1,24 +1,13 @@
-import {
-  Box,
-  Center,
-  useColorModeValue,
-  Text,
-  Stack,
-  HStack,
-  ButtonGroup,
-  Button,
-  Icon
-} from '@chakra-ui/react'
+import { Box, Center, useColorModeValue, Text, Stack, HStack, ButtonGroup, Button, Icon } from '@chakra-ui/react'
 import { Rating } from '../other/rating'
 import { PriceTag } from '../other/price-tag'
 import { useState } from 'react'
-import { BsFillCartPlusFill, BsFillEyeFill, BsFillHeartFill } from "react-icons/bs";
-
-
-const IMAGE =
-  'https://images.unsplash.com/photo-1518051870910-a46e30d9db16?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
+import { BsFillCartPlusFill, BsFillEyeFill, BsFillHeartFill } from 'react-icons/bs'
+import { useNavigate } from 'react-router'
+import { navigationFn } from '~/routes'
 
 export const ProductCard = (props: any) => {
+  const navigate = useNavigate()
   const { product } = props
   const [isHovered, setIsHovered] = useState(false)
 
@@ -28,6 +17,10 @@ export const ProductCard = (props: any) => {
 
   const handleMouseLeave = () => {
     setIsHovered(false)
+  }
+
+  const viewProductDetail = (id: number) => {
+    navigate(`${navigationFn.DETAIL_PRODUCT.replace(':id', id.toString())}`)
   }
 
   return (
@@ -66,13 +59,17 @@ export const ProductCard = (props: any) => {
               zIndex={2}
             >
               <ButtonGroup backgroundColor={'white'} px={{ base: '4', md: '4' }} py={'2px'} borderRadius={'md'}>
-                <Button backgroundColor={'transparent'}  _hover={{color: 'blue.400'}}>
+                <Button backgroundColor={'transparent'} _hover={{ color: 'blue.400' }}>
                   <Icon as={BsFillCartPlusFill} />
                 </Button>
-                <Button backgroundColor={'transparent'}  _hover={{color: 'blue.400'}}>
+                <Button
+                  backgroundColor={'transparent'}
+                  _hover={{ color: 'blue.400' }}
+                  onClick={() => viewProductDetail(product.id)}
+                >
                   <Icon as={BsFillEyeFill} />
                 </Button>
-                <Button backgroundColor={'transparent'}  _hover={{color: 'blue.400'}}>
+                <Button backgroundColor={'transparent'} _hover={{ color: 'blue.400' }}>
                   <Icon as={BsFillHeartFill} />
                 </Button>
               </ButtonGroup>
