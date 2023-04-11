@@ -1,7 +1,14 @@
 import { Box, Image, SimpleGrid, Text } from '@chakra-ui/react'
+import { useNavigate } from 'react-router'
+import { navigationFn } from '~/routes'
 
 export const Category = (props: any) => {
   const { categories } = props
+  const navigate = useNavigate()
+
+  const handleToProductCategoryPage = (id: any) => {
+    navigate(`/category/${id}/products`)
+  }
 
   return (
     <Box>
@@ -20,6 +27,7 @@ export const Category = (props: any) => {
             transition='transform 0.3s ease-in-out'
             _hover={{ transform: 'scale(1.1)' }}
             cursor='pointer'
+            onClick={ () => handleToProductCategoryPage(category.id) }
           >
             <Text mt={4} fontWeight='light' fontSize='md'>
               {category.name}

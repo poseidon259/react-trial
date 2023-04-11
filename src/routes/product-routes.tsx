@@ -1,6 +1,8 @@
 import { RouteObject } from "react-router";
 import { BlankPage } from "~/modules";
 import { ProductDetailPage } from "~/modules/product";
+import { navigationFn } from "./navigation-fn";
+import { ProductCategoryPage } from "~/modules/product/client/pages/product-category-page";
 
 export const productRoutes: RouteObject = {
   errorElement: <BlankPage />,
@@ -8,9 +10,13 @@ export const productRoutes: RouteObject = {
     {
       children: [
         {
-          path: '/product/:id',
+          path: navigationFn.PRODUCT_DETAIL,
           element: <ProductDetailPage />
         },
+        {
+          path: navigationFn.PRODUCT_CATEGORY,
+          element: <ProductCategoryPage />
+        }
       ]
     }
   ]

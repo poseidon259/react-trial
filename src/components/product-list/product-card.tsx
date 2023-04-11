@@ -4,7 +4,6 @@ import { PriceTag } from '../other/price-tag'
 import { useState } from 'react'
 import { BsFillCartPlusFill, BsFillEyeFill, BsFillHeartFill } from 'react-icons/bs'
 import { useNavigate } from 'react-router'
-import { navigationFn } from '~/routes'
 
 export const ProductCard = (props: any) => {
   const navigate = useNavigate()
@@ -19,8 +18,8 @@ export const ProductCard = (props: any) => {
     setIsHovered(false)
   }
 
-  const viewProductDetail = (id: number) => {
-    navigate(`${navigationFn.DETAIL_PRODUCT.replace(':id', id.toString())}`)
+  const viewProductDetail = (id: any) => {
+    navigate(`/product/${id}`)
   }
 
   return (

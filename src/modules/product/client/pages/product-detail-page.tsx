@@ -1,14 +1,15 @@
-import { Box, Divider, Flex, Spinner, Text } from '@chakra-ui/react'
+import { Box, Flex, Spinner, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { ListCommentCard } from '~/components/comment/list-comment-card'
 import { Pagination } from '~/components/other/pagination'
 import { ProductDetail } from '~/components/product-detail/product-detail'
 import { DefaultLayout } from '~/layouts'
 import axiosClient from '~/libs/axios/axiosClient'
 import { CommentPublicForm } from '../form/create-comment-product'
-import axiosClientFormData from '~/libs/axios/axiosClientFormData'
-import { useQueryClient } from 'react-query'
+import { LIMIT_PER_PAGE_COMMENT } from '~/configs'
+import { useCustomToast } from '~/hooks'
+import { navigationFn } from '~/routes'
 
 export const ProductDetailPage = () => {
   const { id } = useParams()
@@ -16,19 +17,20 @@ export const ProductDetailPage = () => {
   const [comments, setComments] = useState([])
   const [isLoadingProductDetail, setIsLoadingProductDetail] = useState(true)
   const [isLoadingComment, setIsLoadingComment] = useState(true)
-  const [limit, setLimit] = useState(5)
+  const [limit, setLimit] = useState(LIMIT_PER_PAGE_COMMENT)
   const [currentPage, setCurrentPage] = useState(1)
   const [lastPage, setLastPage] = useState(1)
   const isLogin = localStorage.getItem('user') ?? false
-
   const [quantity, setQuantity] = useState(1)
-
-  const handleMasterFieldCallback = (state: any) => {
-    console.log(state)
-  }
-
+  const [masterField, setMasterField] = useState(null)
+  const { toastSuccess, toastError } = useCustomToast()
+  const navigate = useNavigate()
   const handleQuantityCallback = (quantity: number) => {
     setQuantity(quantity)
+  }
+
+  const handleMasterFieldClick = (masterField: any) => {
+    setMasterField(masterField)
   }
 
   const onPageChange = (pageNumber: number) => {
@@ -36,10 +38,16 @@ export const ProductDetailPage = () => {
   }
 
   useEffect(() => {
-    axiosClient.get(`client/product/${id}`).then((res) => {
-      setProduct(res.data)
-      setIsLoadingProductDetail(false)
-    })
+    axiosClient
+      .get(`client/product/${id}`)
+      .then((res) => {
+        setProduct(res.data)
+        setIsLoadingProductDetail(false)
+      })
+      .catch((err) => {
+        toastError(err.response.data.message)
+        navigate(navigationFn.HOME)
+      })
   }, [])
 
   useEffect(() => {
@@ -77,7 +85,8 @@ export const ProductDetailPage = () => {
         ) : (
           <ProductDetail
             quantityCallback={handleQuantityCallback}
-            masterFieldCallback={handleMasterFieldCallback}
+            masterFieldCallback={handleMasterFieldClick}
+            masterField={masterField}
             quantity={quantity}
             product={product}
           />

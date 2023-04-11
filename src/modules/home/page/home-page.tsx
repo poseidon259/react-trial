@@ -1,9 +1,10 @@
-import { Box, Flex, Spinner } from '@chakra-ui/react'
+import { Box, Flex, Skeleton, Spinner } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { Category } from '~/components/category/category'
 import { Pagination } from '~/components/other/pagination'
 import { ProductList } from '~/components/product-list/product-list'
 import { SlickSlider } from '~/components/slick/slick-slider'
+import { LIMIT_PER_PAGE_PRODUCT } from '~/configs'
 import { DefaultLayout } from '~/layouts'
 import axiosClient from '~/libs/axios/axiosClient'
 
@@ -16,14 +17,14 @@ export const HomePage = () => {
   const [isLoadingProduct, setIsLoadingProduct] = useState(true)
   const [lastPage, setLastPage] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
-  const [limit, setLimit] = useState(4)
+  const [limit, setLimit] = useState(LIMIT_PER_PAGE_PRODUCT)
 
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
   }
 
   useEffect(() => {
-    axiosClient.get('/list_banner').then((res: any) => {
+    axiosClient.get('list_banner').then((res: any) => {
       setBanners(res.data)
       setIsLoadingBanner(false)
     })
@@ -48,25 +49,26 @@ export const HomePage = () => {
   return (
     <>
       <DefaultLayout>
-        <Box px={{ base: '12', md: '36' }}>
+        <Box px={{ base: '12', md: '24' }}>
           {isLoadingBanner ? (
-            <Flex justifyContent='center' alignItems='center' mx='200px'>
-              <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
+            <Flex justifyContent='center' pb={{ base: '12', md: '12' }}>
+              <Skeleton height={'400px'} width='100%' />
             </Flex>
           ) : (
             <SlickSlider images={banners} />
           )}
           {isLoadingCategory ? (
-            <Flex justifyContent='center' alignItems='center' mx='200px' pt='20px'>
-              <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
+            <Flex justifyContent='center' pb={{ base: '12', md: '12' }}>
+              <Skeleton height={'400px'} width='100%' />
             </Flex>
           ) : (
             <Category categories={categories} />
           )}
           {isLoadingProduct ? (
-            <Flex justifyContent='center' alignItems='center' mx='200px' pt='20px'>
-              <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
+            <Flex justifyContent='center' pb={{ base: '12', md: '12' }}>
+              <Skeleton height={'400px'} width='100%' />
             </Flex>
+            
           ) : (
             <>
               <ProductList products={products} />
