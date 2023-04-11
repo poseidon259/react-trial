@@ -16,20 +16,25 @@ export const AccordionCategory = (props: any) => {
   return (
     <>
       <Accordion allowToggle defaultIndex={0}>
+        <Box py={{ base: '4', md: '4' }} fontSize={'20px'}>
+          <Icon as={BsFillGridFill} mr={'10px'} />
+          <Text as='span' fontWeight={'bold'}>
+            Tất cả danh mục
+          </Text>
+        </Box>
         <AccordionItem>
           <h2>
             <AccordionButton>
-              <Box as='span' flex='1' textAlign='left' color={'primary'}>
-                <Icon as={BsFillGridFill} mr={'10px'} />
+              <Box as='span' flex='1' textAlign='left' color={'primary'} fontSize={'15px'}>
                 {category.name}
               </Box>
-              <AccordionIcon />
+              <AccordionIcon color={'primary'} />
             </AccordionButton>
           </h2>
-          <AccordionPanel pb={4}>
+          <AccordionPanel pb={4} pl={{ base: '8', md: '8' }} >
             {category.category_children.map((item: any) => (
-              <Text cursor={'pointer'} key={item.id} fontWeight={'regular'} pl={{ base: '8', md: '8' }}>
-                { item.name }
+              <Text cursor={'pointer'} key={item.id} fontWeight={'regular'}fontSize={'14px'}>
+                {item.name}
               </Text>
             ))}
           </AccordionPanel>

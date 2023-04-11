@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { AccordionCategory } from '~/components/product-category/accordion-category'
+import { FilterProductCategory } from '~/components/product-category/filter-product-category'
 import { SlickSlider } from '~/components/slick/slick-slider'
 import { LIMIT_PER_PAGE_PRODUCT_CATEGORY } from '~/configs'
 import { useCustomToast } from '~/hooks'
@@ -74,6 +75,7 @@ export const ProductCategoryPage = () => {
             <>
               <Box flex='3'  pr={{ base: '8', md: '8' }}>
                 <AccordionCategory category={category} />
+                <FilterProductCategory />
               </Box>
               <Box flex='7'>Content on the right (70%)</Box>
             </>
