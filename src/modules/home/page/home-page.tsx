@@ -17,7 +17,7 @@ export const HomePage = () => {
   const [isLoadingProduct, setIsLoadingProduct] = useState(true)
   const [lastPage, setLastPage] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
-  const [limit, setLimit] = useState(LIMIT_PER_PAGE_PRODUCT)
+  const limit = LIMIT_PER_PAGE_PRODUCT
 
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
@@ -68,10 +68,9 @@ export const HomePage = () => {
             <Flex justifyContent='center' pb={{ base: '12', md: '12' }}>
               <Skeleton height={'400px'} width='100%' />
             </Flex>
-            
           ) : (
             <>
-              <ProductList products={products} />
+              <ProductList products={products} max={4} />
               {lastPage > 1 && <Pagination currentPage={currentPage} lastPage={lastPage} onPageChange={onPageChange} />}
             </>
           )}

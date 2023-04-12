@@ -1,13 +1,14 @@
-import { SimpleGrid, SimpleGridProps } from '@chakra-ui/react'
+import { SimpleGrid } from '@chakra-ui/react'
 import { useMemo } from 'react'
 
-export const ProductGrid = (props: SimpleGridProps) => {
+export const ProductGrid = (props: any) => {
+  const { max } = props
   const columns = useMemo(() => {
     return {
-      base: Math.min(1, 1),
-      md: Math.min(2, 2),
-      lg: Math.min(3, 3),
-      xl: Math.min(4, 4)
+      base: Math.min(1, max - 3 <= 0 ? 1 : max - 3),
+      md: Math.min(2, max - 2 <= 0 ? 1 : max - 2),
+      lg: Math.min(3, max - 1 <= 0 ? 1 : max - 1),
+      xl: Math.min(4, max <= 0 ? 1 : max)
     }
   }, [props.children])
 

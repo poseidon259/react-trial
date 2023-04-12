@@ -16,7 +16,7 @@ export const AccordionCategory = (props: any) => {
   return (
     <>
       <Accordion allowToggle defaultIndex={0}>
-        <Box py={{ base: '4', md: '4' }} fontSize={'20px'}>
+        <Box pb={{ base: '4', md: '4' }} fontSize={'20px'}>
           <Icon as={BsFillGridFill} mr={'10px'} />
           <Text as='span' fontWeight={'bold'}>
             Tất cả danh mục
