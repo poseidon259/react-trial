@@ -6,7 +6,7 @@ import { AccordionCategory } from '~/components/product-category/accordion-categ
 import { FilterProductCategory } from '~/components/product-category/filter-product-category'
 import { ProductCategory } from '~/components/product-category/product-category'
 import { SlickSlider } from '~/components/slick/slick-slider'
-import { LIMIT_PER_PAGE_PRODUCT_CATEGORY } from '~/configs'
+import { FALSE, LIMIT_PER_PAGE_PRODUCT_CATEGORY, TRUE } from '~/configs'
 import { useCustomToast } from '~/hooks'
 import { DefaultLayout } from '~/layouts'
 import axiosClient from '~/libs/axios/axiosClient'
@@ -15,6 +15,7 @@ import { navigationFn } from '~/routes'
 export const ProductCategoryPage = () => {
   const { id } = useParams()
   const [category, setCategory] = useState(null)
+  const [categoryChild, setCategoryChild] = useState(null)
   const [banners, setBanners] = useState([])
   const [isLoadingBanner, setIsLoadingBanner] = useState(true)
   const [isLoadingCategory, setIsLoadingCategory] = useState(true)
@@ -22,14 +23,72 @@ export const ProductCategoryPage = () => {
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [lastPage, setLastPage] = useState(1)
+  const [sortPrice, setSortPrice] = useState('')
+  const [popular, setPopular] = useState(FALSE)
+  const [newest, setNewest] = useState(TRUE)
+  const options = [
+    { label: 'Tăng dần', value: 'asc' },
+    { label: 'Giảm dần', value: 'desc' }
+  ]
+
+  const [priceRange, setPriceRange] = useState([1000, 10000])
+  const [dateStart, setDateStart] = useState(null)
+  const [dateEnd, setDateEnd] = useState(null)
+
+  const range = [1, 50000]
+
   const [isLoadingProductCategory, setIsLoadingProductCategory] = useState(true)
   const limit = LIMIT_PER_PAGE_PRODUCT_CATEGORY
 
   const navigate = useNavigate()
   const { toastError } = useCustomToast()
 
+  const handlePriceRange = (newValues: number[]) => {
+    setPriceRange(newValues)
+  }
+
+  const handleDateStart = (date: any) => {
+    setDateStart(date)
+  }
+
+  const handleDateEnd = (date: any) => {
+    setDateEnd(date)
+  }
+
+  const handleSubCategory = (id: any) => {
+    if (id === categoryChild) {
+      setCategoryChild(null)
+    } else {
+      setCategoryChild(id)
+    }
+  }
+
   const onPageChange = (page: number) => {
     setCurrentPage(page)
+  }
+
+  const onSortPriceChange = (value: any) => {
+    if (value === '') {
+      setSortPrice(value)
+      setPopular(FALSE)
+      setNewest(TRUE)
+    } else {
+      setSortPrice(value)
+      setPopular(FALSE)
+      setNewest(FALSE)
+    }
+  }
+
+  const handlePopular = () => {
+    setPopular(popular ? FALSE : TRUE)
+    setNewest(FALSE)
+    setSortPrice('')
+  }
+
+  const handleNewest = () => {
+    setPopular(FALSE)
+    setNewest(newest ? FALSE : TRUE)
+    setSortPrice('')
   }
 
   useEffect(() => {
@@ -50,7 +109,15 @@ export const ProductCategoryPage = () => {
       .get(`client/category/${id}/products`, {
         params: {
           page: currentPage,
-          limit: limit
+          limit: limit,
+          sort_price: sortPrice,
+          popular: popular,
+          newest: newest,
+          category_child: categoryChild,
+          price_start: priceRange[0],
+          price_end: priceRange[1],
+          date_start: dateStart,
+          date_end: dateEnd
         }
       })
       .then((res: any) => {
@@ -63,7 +130,7 @@ export const ProductCategoryPage = () => {
         navigate(navigationFn.HOME)
         toastError(err.response.data.message)
       })
-  }, [currentPage, limit])
+  }, [currentPage, limit, popular, newest, sortPrice, categoryChild, priceRange, dateStart, dateEnd])
 
   useEffect(() => {
     axiosClient.get('list_banner').then((res: any) => {
@@ -91,8 +158,20 @@ export const ProductCategoryPage = () => {
                 </Flex>
               ) : (
                 <>
-                  <AccordionCategory category={category} />
-                  <FilterProductCategory />
+                  <AccordionCategory
+                    category={category}
+                    categoryChild={categoryChild}
+                    handleSubCategoryCallback={handleSubCategory}
+                  />
+                  <FilterProductCategory
+                    handlePriceRangeCallback={handlePriceRange}
+                    handleDateStartCallback={handleDateStart}
+                    handleDateEndCallback={handleDateEnd}
+                    dateStart={dateStart}
+                    dateEnd={dateEnd}
+                    priceRange={priceRange}
+                    range={range}
+                  />
                 </>
               )}
             </Box>
@@ -103,7 +182,16 @@ export const ProductCategoryPage = () => {
                 </Flex>
               ) : (
                 <>
-                  <ProductCategory products={products} />
+                  <ProductCategory
+                    products={products}
+                    options={options}
+                    popular={popular}
+                    newest={newest}
+                    sortPrice={sortPrice}
+                    onSortPriceChangeCallback={onSortPriceChange}
+                    handlePopularCallback={handlePopular}
+                    handleNewestCallback={handleNewest}
+                  />
                   {lastPage > 1 && (
                     <Pagination currentPage={currentPage} lastPage={lastPage} onPageChange={onPageChange} />
                   )}

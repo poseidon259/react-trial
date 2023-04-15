@@ -36,7 +36,7 @@ export const ProductDetail = (props: any) => {
 
   return (
     <>
-      <Flex gap={12} justifyContent={'center'}>
+      <Flex gap={12} justifyContent={'center'} minH={'600px'}>
         <Box maxW={'50%'} mx={'auto'} flex={1}>
           <ProductImageSlider images={product.product_images} />
         </Box>
@@ -46,9 +46,9 @@ export const ProductDetail = (props: any) => {
               {product.name}
             </Heading>
             <HStack>
-              <Rating defaultValue={4} size='sm' />
+              <Rating defaultValue={product.avg_rating ?? 0} size='sm' />
               <Text fontSize='sm' color={'gray.400'}>
-                {12} Reviews
+                {product.comments_count} Reviews
               </Text>
             </HStack>
             <PriceTag salePrice={product.sale_price} price={product.origin_price} currency='VND' />

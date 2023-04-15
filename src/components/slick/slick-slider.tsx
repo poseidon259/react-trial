@@ -6,8 +6,8 @@ import { AspectRatio, Box, Image } from '@chakra-ui/react'
 export const SlickSlider = (props: any) => {
   const { images } = props
   const settings = {
-    // dots: true,
     infinite: true,
+    fade: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,

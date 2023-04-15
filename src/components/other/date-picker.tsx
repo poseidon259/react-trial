@@ -1,6 +1,14 @@
-import { DatePicker } from 'chakra-ui-date-input'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import './css/date-picker.scss'
+import { Box } from '@chakra-ui/react'
 
 export const CustomDatePicker = (props: any) => {
-  const { placeholder, name } = props
-  return <DatePicker placeholder={placeholder} name={name} mb={'10px'} />
+  const { placeholder, name, value, callback } = props
+
+  return (
+    <Box pb={'10px'}>
+      <DatePicker selected={value} placeholderText={placeholder} onChange={(date) => callback(date)} />
+    </Box>
+  )
 }

@@ -1,16 +1,22 @@
 import { Accordion, AccordionButton, AccordionItem, AccordionPanel, Box, Button, Icon, Text } from '@chakra-ui/react'
 import { TbFilter } from 'react-icons/tb'
-import { useState } from 'react'
 import { PriceRange } from './price-range'
 import { CustomDatePicker } from '../other/date-picker'
 import { Rating } from '../other/rating'
 
 export const FilterProductCategory = (props: any) => {
-  const [values, setValues] = useState([1000000, 30000000])
-  const range = [1, 50000000]
+  const { handlePriceRangeCallback, priceRange, range, dateStart, dateEnd, handleFilterCallback, handleDateStartCallback, handleDateEndCallback } = props
 
-  const handleChange = (newValues: number[]) => {
-    setValues(newValues)
+  const handlePriceChange = (newValues: number[]) => {
+    handlePriceRangeCallback(newValues)
+  }
+
+  const handleDateStart = (date: string) => {
+    handleDateStartCallback(date)
+  }
+
+  const handleDateEnd = (date: string) => {
+    handleDateEndCallback(date)
   }
 
   return (
@@ -29,7 +35,7 @@ export const FilterProductCategory = (props: any) => {
             </Box>
           </AccordionButton>
           <AccordionPanel pb={4}>
-            <PriceRange values={values} range={range} callback={handleChange} />
+            <PriceRange values={priceRange} range={range} callback={handlePriceChange} />
           </AccordionPanel>
         </AccordionItem>
 
@@ -44,13 +50,13 @@ export const FilterProductCategory = (props: any) => {
               <Text fontSize={'14px'} fontWeight={'regular'}>
                 Từ
               </Text>
-              <CustomDatePicker placeholder={'Chọn ngày bắt đầu'} name={'date_start'} />
+              <CustomDatePicker value={dateStart} placeholder={'Chọn ngày bắt đầu'} name={'date_start'} callback={handleDateStart} />
             </Box>
             <Box>
               <Text fontSize={'14px'} fontWeight={'regular'}>
                 Đến
               </Text>
-              <CustomDatePicker placeholder={'Chọn ngày kết thúc'} name={'date_end'} />
+              <CustomDatePicker value={dateEnd} placeholder={'Chọn ngày kết thúc'} name={'date_end'} callback={handleDateEnd} />
             </Box>
           </AccordionPanel>
         </AccordionItem>
@@ -89,18 +95,6 @@ export const FilterProductCategory = (props: any) => {
             </Box>
           </AccordionPanel>
         </AccordionItem>
-
-        <Box w={'full'} pt={{ base: '4', md: '4' }}>
-          <Button
-          w={'full'}
-            size='md'
-            color={'white'}
-            backgroundColor={'primary'}
-            textTransform={'capitalize'}
-          >
-            Lọc
-          </Button>
-        </Box>
       </Accordion>
     </>
   )

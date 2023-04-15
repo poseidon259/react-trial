@@ -1,7 +1,11 @@
 import { Select } from '@chakra-ui/select'
 
 export const CustomSelect = (props: any) => {
-  const { options, placeholder, handleChangeCallback } = props
+  const { options, placeholder, sortPrice, handleChangeCallback } = props
+
+  const handleChange = (e: any) => {
+    handleChangeCallback(e.target.value)
+  }
 
   return (
     <Select
@@ -13,7 +17,8 @@ export const CustomSelect = (props: any) => {
       _hover={{
         backgroundColor: 'white'
       }}
-      onChange={(e) => handleChangeCallback(e.target.value)}
+      onChange={(e) => handleChange(e)}
+      value={sortPrice}
     >
       {options.map((option: any) => (
         <option key={option.value} value={option.value}>

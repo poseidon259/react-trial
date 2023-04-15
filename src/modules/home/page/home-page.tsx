@@ -1,9 +1,10 @@
-import { Box, Flex, Skeleton, Spinner } from '@chakra-ui/react'
+import { Box, Flex, Skeleton, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { Category } from '~/components/category/category'
 import { Pagination } from '~/components/other/pagination'
 import { ProductList } from '~/components/product-list/product-list'
 import { SlickSlider } from '~/components/slick/slick-slider'
+import { StoreList } from '~/components/store-list/store-list'
 import { LIMIT_PER_PAGE_PRODUCT } from '~/configs'
 import { DefaultLayout } from '~/layouts'
 import axiosClient from '~/libs/axios/axiosClient'
@@ -19,9 +20,19 @@ export const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const limit = LIMIT_PER_PAGE_PRODUCT
 
+  const [stores, setStores] = useState([])
+  const [isLoadingStore, setIsLoadingStore] = useState(true)
+
   const onPageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber)
   }
+
+  useEffect(() => {
+    axiosClient.get('client/stores/homepage').then((res: any) => {
+      setStores(res)
+      setIsLoadingStore(false)
+    })
+  }, [])
 
   useEffect(() => {
     axiosClient.get('list_banner').then((res: any) => {
@@ -45,11 +56,10 @@ export const HomePage = () => {
       setIsLoadingProduct(false)
     })
   }, [currentPage, limit])
-
   return (
     <>
       <DefaultLayout>
-        <Box px={{ base: '12', md: '24' }}>
+        <Box>
           {isLoadingBanner ? (
             <Flex justifyContent='center' pb={{ base: '12', md: '12' }}>
               <Skeleton height={'400px'} width='100%' />
@@ -64,14 +74,35 @@ export const HomePage = () => {
           ) : (
             <Category categories={categories} />
           )}
+          {isLoadingStore ? (
+            <Flex justifyContent='center' pb={{ base: '12', md: '12' }}>
+              <Skeleton height={'400px'} width='100%' />
+            </Flex>
+          ) : (
+            <>
+              {stores.length === 0 ? (
+                <Text> Hiện chưa có cửa hàng đối tác </Text>
+              ) : (
+                <StoreList images={stores} />
+              )}
+            </>
+          )}
           {isLoadingProduct ? (
             <Flex justifyContent='center' pb={{ base: '12', md: '12' }}>
               <Skeleton height={'400px'} width='100%' />
             </Flex>
           ) : (
             <>
-              <ProductList products={products} max={4} />
-              {lastPage > 1 && <Pagination currentPage={currentPage} lastPage={lastPage} onPageChange={onPageChange} />}
+              {products.length === 0 ? (
+                <Text> Không tồn tại sản phẩm </Text>
+              ) : (
+                <>
+                  <ProductList products={products} max={4} />
+                  {lastPage > 1 && (
+                    <Pagination currentPage={currentPage} lastPage={lastPage} onPageChange={onPageChange} />
+                  )}
+                </>
+              )}
             </>
           )}
         </Box>

@@ -11,9 +11,13 @@ export const Footer = () => (
         justify='space-between'
         py={{ base: '12', md: '16' }}
       >
-        <Stack spacing={{ base: '6', md: '8' }} align='start'>
+        <Stack spacing={{ base: '6', md: '8' }} align='start' w={'40%'}>
           <Logo />
-          <Text color='muted'>Create beautiful websites remarkably fast.</Text>
+          <Text fontWeight={'light'}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+            scrambled it to make a type specimen book
+          </Text>
         </Stack>
         <Stack direction={{ base: 'column-reverse', md: 'column', lg: 'row' }} spacing={{ base: '12', md: '8' }}>
           <Stack direction='row' spacing='8'>
@@ -54,7 +58,7 @@ export const Footer = () => (
       <Divider />
       <Stack pt='8' pb='4' justify='space-between' direction={{ base: 'column-reverse', md: 'row' }} align='center'>
         <Text fontSize='sm' color='subtle'>
-          &copy; {new Date().getFullYear()} Chakra UI Pro, Inc. All rights reserved.
+          &copy; {new Date().getFullYear()} Trial, Inc. All rights reserved.
         </Text>
         <ButtonGroup variant='ghost'>
           <IconButton as='a' href='#' aria-label='LinkedIn' icon={<FaLinkedin fontSize='1.25rem' />} />

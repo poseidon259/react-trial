@@ -1,13 +1,10 @@
 import {
   Box,
   Button,
-  Container,
-  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Heading,
-  Input,
   Stack,
   Textarea
 } from '@chakra-ui/react'

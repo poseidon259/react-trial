@@ -2,7 +2,8 @@ import { Box, Button } from '@chakra-ui/react'
 import { CustomSelect } from '../other/CustomSelect'
 
 export const SortProductCategory = (props: any) => {
-  const { popular, newest, options, handlePopularCallback, handleNewestCallback, handleChangeCallback } = props
+  const { popular, newest, options, sortPrice, handlePopularCallback, handleNewestCallback, handleChangeCallback } =
+    props
   return (
     <Box
       as='form'
@@ -39,7 +40,7 @@ export const SortProductCategory = (props: any) => {
         </Button>
       </Box>
       <Box pl={{ base: '4', md: '4' }}>
-        <CustomSelect options={options} placeholder={'Theo giá'} handleChangeCallback={handleChangeCallback} />
+        <CustomSelect options={options} placeholder={'Theo giá'} sortPrice={sortPrice} handleChangeCallback={handleChangeCallback} />
       </Box>
     </Box>
   )

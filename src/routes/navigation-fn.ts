@@ -10,6 +10,8 @@ export const navigationFn = {
   PRODUCT_DETAIL: '/product/:id',
   PRODUCT_CATEGORY: '/category/:id/products',
 
+  STORE_DETAIL: '/store/:id',
+
   HOME_INFORMATION: '/home',
   CHANGE_PASSWORD: '/admin/change-password',
 

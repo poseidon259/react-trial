@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner, Text } from '@chakra-ui/react'
+import { Box, Flex, Skeleton, Spinner, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { ListCommentCard } from '~/components/comment/list-comment-card'
@@ -79,8 +79,8 @@ export const ProductDetailPage = () => {
           </Text>
         </Box>
         {isLoadingProductDetail ? (
-          <Flex justifyContent='center' alignItems='center' mx='200px'>
-            <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
+          <Flex justifyContent='center' pb={{ base: '12', md: '12' }}>
+            <Skeleton height={'400px'} width='100%' />
           </Flex>
         ) : (
           <ProductDetail
@@ -92,8 +92,8 @@ export const ProductDetailPage = () => {
           />
         )}
         {isLoadingComment ? (
-          <Flex justifyContent='center' alignItems='center' mx='200px' pt={'20px'}>
-            <Spinner thickness='4px' speed='0.65s' emptyColor='gray.200' color='blue.500' size='xl' />
+          <Flex justifyContent='center' pb={{ base: '12', md: '12' }}>
+            <Skeleton height={'400px'} width='100%' />
           </Flex>
         ) : (
           <Box py={{ base: '12', md: '12' }}>

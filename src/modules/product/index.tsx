@@ -1,3 +1,2 @@
-export * from './client/pages';
-export * from './cms/pages';
+export * from './pages';
 

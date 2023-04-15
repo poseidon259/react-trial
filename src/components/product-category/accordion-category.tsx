@@ -11,7 +11,7 @@ import {
 import { BsFillGridFill } from 'react-icons/bs'
 
 export const AccordionCategory = (props: any) => {
-  const { category } = props
+  const { category, categoryChild, handleSubCategoryCallback } = props
 
   return (
     <>
@@ -31,11 +31,24 @@ export const AccordionCategory = (props: any) => {
               <AccordionIcon color={'primary'} />
             </AccordionButton>
           </h2>
-          <AccordionPanel pb={4} pl={{ base: '8', md: '8' }} >
+          <AccordionPanel>
             {category.category_children.map((item: any) => (
-              <Text cursor={'pointer'} key={item.id} fontWeight={'regular'}fontSize={'14px'}>
+              <Box
+                py={{ base: '2', md: '2' }}
+                px={{ base: '6', md: '6' }}
+                cursor={'pointer'}
+                key={item.id}
+                fontWeight={'regular'}
+                fontSize={'14px'}
+                onClick={() => handleSubCategoryCallback(item.id)}
+                backgroundColor={ categoryChild === item.id ? 'primary' : 'white' }
+                color={ categoryChild === item.id ? 'white' : 'black' }
+                borderRadius={'md'}
+                w={'fit-content'}
+                textAlign={'center'}
+              >
                 {item.name}
-              </Text>
+              </Box>
             ))}
           </AccordionPanel>
         </AccordionItem>

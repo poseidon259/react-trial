@@ -15,11 +15,11 @@ export const CategoryCarousel = (props: any) => {
   const settings = {
     // dots: true,
     infinite: true,
-    speed: 500,
+    speed: 3000,
     slidesToShow: 5,
-    slidesToScroll: 5,
+    slidesToScroll: 3,
     autoplay: true,
-    autoplaySpeed: 3000
+    autoplaySpeed: 5000
   }
   return (
     <>

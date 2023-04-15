@@ -1,31 +1,29 @@
-import { Box, Button, Select } from '@chakra-ui/react'
-import { CustomSelect } from '../other/CustomSelect'
-import { useState } from 'react'
+import { Text } from '@chakra-ui/react'
 import { SortProductCategory } from './sort-product-category'
 import { ProductCategoryList } from './product-category-list'
 
 export const ProductCategory = (props: any) => {
-  const { products } = props
-  const [popular, setPopular] = useState(false)
-  const [newest, setNewest] = useState(true)
-  const [selectedValue, setSelectedValue] = useState('')
-  const options = [
-    { label: 'Tăng dần', value: 'asc' },
-    { label: 'Giảm dần', value: 'desc' }
-  ]
+  const {
+    products,
+    options,
+    sortPrice,
+    popular,
+    newest,
+    onSortPriceChangeCallback,
+    handleNewestCallback,
+    handlePopularCallback
+  } = props
 
   const handlePopular = () => {
-    setPopular(!popular)
-    setNewest(false)
+    handlePopularCallback()
   }
 
   const handleNewest = () => {
-    setPopular(false)
-    setNewest(!newest)
+    handleNewestCallback()
   }
 
-  const handleChange = (value: string) => {
-    setSelectedValue(value)
+  const handleSortPrice = (value: any) => {
+    onSortPriceChangeCallback(value)
   }
 
   return (
@@ -34,11 +32,18 @@ export const ProductCategory = (props: any) => {
         popular={popular}
         newest={newest}
         options={options}
+        sortPrice={sortPrice}
         handlePopularCallback={handlePopular}
         handleNewestCallback={handleNewest}
-        handleChangeCallback={handleChange}
+        handleChangeCallback={handleSortPrice}
       />
-      <ProductCategoryList products={products} max={3} />
+      {products.length > 0 ? (
+        <ProductCategoryList products={products} max={3} />
+      ) : (
+        <Text textAlign={'center'} py={{ base: '8', md: '8' }}>
+          Danh mục không tồn tại sản phẩm
+        </Text>
+      )}
     </>
   )
 }
