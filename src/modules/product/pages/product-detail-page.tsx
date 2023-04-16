@@ -24,7 +24,13 @@ export const ProductDetailPage = () => {
   const [quantity, setQuantity] = useState(1)
   const [masterField, setMasterField] = useState(null)
   const { toastSuccess, toastError } = useCustomToast()
+  const [createdComment, setCreatedComment] = useState(1)
   const navigate = useNavigate()
+
+  const handleCreateComment = (number: any) => {
+    setCreatedComment(number)
+  }
+
   const handleQuantityCallback = (quantity: number) => {
     setQuantity(quantity)
   }
@@ -39,7 +45,11 @@ export const ProductDetailPage = () => {
 
   useEffect(() => {
     axiosClient
-      .get(`client/product/${id}`)
+      .get(`client/product/${id}`, {
+        params: {
+          child_master_field_id: masterField
+        }
+      })
       .then((res) => {
         setProduct(res.data)
         setIsLoadingProductDetail(false)
@@ -48,7 +58,7 @@ export const ProductDetailPage = () => {
         toastError(err.response.data.message)
         navigate(navigationFn.HOME)
       })
-  }, [])
+  }, [masterField])
 
   useEffect(() => {
     axiosClient
@@ -64,7 +74,7 @@ export const ProductDetailPage = () => {
         setCurrentPage(res.current_page)
         setIsLoadingComment(false)
       })
-  }, [currentPage, limit, comments])
+  }, [currentPage, limit, createdComment])
 
   return (
     <>
@@ -116,7 +126,7 @@ export const ProductDetailPage = () => {
             </Box>
           </Box>
         )}
-        {isLogin && <CommentPublicForm />}
+        {isLogin && <CommentPublicForm callback={ handleCreateComment } />}
       </DefaultLayout>
     </>
   )

@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  Stack,
-  Textarea
-} from '@chakra-ui/react'
+import { Box, Button, FormControl, FormErrorMessage, FormLabel, Heading, Stack, Textarea } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { CommentFormClientSchema } from '~/validations'
@@ -19,10 +10,11 @@ type TComment = {
   content: string
 }
 
-export const CommentPublicForm = () => {
+export const CommentPublicForm = (props: any) => {
+  const { callback } = props
   const initialValues = {
     rating: 0,
-    content: '',
+    content: ''
   } as TComment
 
   const {
@@ -38,6 +30,7 @@ export const CommentPublicForm = () => {
 
   const onSubmit = (data: TComment) => {
     mutate(data)
+    callback((prevState: any)  => prevState  + 1)
   }
 
   return (
@@ -70,7 +63,7 @@ export const CommentPublicForm = () => {
           />
           <FormErrorMessage>{errors.content?.message}</FormErrorMessage>
         </FormControl>
-        <Button type='submit' colorScheme='blue' isLoading={isLoading} >
+        <Button type='submit' colorScheme='blue' isLoading={isLoading}>
           Gửi đánh giá
         </Button>
       </Stack>

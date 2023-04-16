@@ -12,6 +12,8 @@ export const navigationFn = {
 
   STORE_DETAIL: '/store/:id',
 
+  CART: '/cart',
+
   HOME_INFORMATION: '/home',
   CHANGE_PASSWORD: '/admin/change-password',
 

@@ -33,7 +33,6 @@ export const ProductDetail = (props: any) => {
     quantityCallback(quantity)
   }
 
-
   return (
     <>
       <Flex gap={12} justifyContent={'center'} minH={'600px'}>
@@ -51,7 +50,11 @@ export const ProductDetail = (props: any) => {
                 {product.comments_count} Reviews
               </Text>
             </HStack>
-            <PriceTag salePrice={product.sale_price} price={product.origin_price} currency='VND' />
+            {masterField ? (
+              <PriceTag salePrice={product.child_sale_price} price={product.child_origin_price} currency='VND' />
+              ) : (
+              <PriceTag salePrice={product.sale_price} price={product.origin_price} currency='VND' />
+            )}
             <Text fontSize='md' fontWeight={'light'}>
               {product.description_detail}
             </Text>
