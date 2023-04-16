@@ -7,7 +7,6 @@ export const SlickSlider = (props: any) => {
   const { images } = props
   const settings = {
     infinite: true,
-    fade: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,

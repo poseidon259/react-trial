@@ -1,4 +1,4 @@
-import { Box, Flex, Skeleton, Spinner, Text } from '@chakra-ui/react'
+import { Box, Flex, Skeleton, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { ListCommentCard } from '~/components/comment/list-comment-card'

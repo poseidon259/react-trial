@@ -26,10 +26,13 @@ export const ProductCategoryPage = () => {
   const [sortPrice, setSortPrice] = useState('')
   const [popular, setPopular] = useState(FALSE)
   const [newest, setNewest] = useState(TRUE)
+  const [rating, setRating] = useState(null)
+
   const options = [
     { label: 'Tăng dần', value: 'asc' },
     { label: 'Giảm dần', value: 'desc' }
   ]
+  const max = 3;
 
   const [priceRange, setPriceRange] = useState([1000, 10000])
   const [dateStart, setDateStart] = useState(null)
@@ -42,6 +45,10 @@ export const ProductCategoryPage = () => {
 
   const navigate = useNavigate()
   const { toastError } = useCustomToast()
+
+  const handleFilterRating = (value: any) => {
+    setRating(value);
+  };
 
   const handlePriceRange = (newValues: number[]) => {
     setPriceRange(newValues)
@@ -117,7 +124,8 @@ export const ProductCategoryPage = () => {
           price_start: priceRange[0],
           price_end: priceRange[1],
           date_start: dateStart,
-          date_end: dateEnd
+          date_end: dateEnd,
+          rating: rating
         }
       })
       .then((res: any) => {
@@ -130,7 +138,7 @@ export const ProductCategoryPage = () => {
         navigate(navigationFn.HOME)
         toastError(err.response.data.message)
       })
-  }, [currentPage, limit, popular, newest, sortPrice, categoryChild, priceRange, dateStart, dateEnd])
+  }, [currentPage, limit, popular, newest, sortPrice, categoryChild, priceRange, dateStart, dateEnd, rating])
 
   useEffect(() => {
     axiosClient.get('list_banner').then((res: any) => {
@@ -167,6 +175,8 @@ export const ProductCategoryPage = () => {
                     handlePriceRangeCallback={handlePriceRange}
                     handleDateStartCallback={handleDateStart}
                     handleDateEndCallback={handleDateEnd}
+                    handleFilterRatingCallback={handleFilterRating}
+                    rating={rating}
                     dateStart={dateStart}
                     dateEnd={dateEnd}
                     priceRange={priceRange}
@@ -188,6 +198,7 @@ export const ProductCategoryPage = () => {
                     popular={popular}
                     newest={newest}
                     sortPrice={sortPrice}
+                    max={max}
                     onSortPriceChangeCallback={onSortPriceChange}
                     handlePopularCallback={handlePopular}
                     handleNewestCallback={handleNewest}

@@ -3,7 +3,7 @@ import { BlankPage } from "~/modules";
 import { navigationFn } from "./navigation-fn";
 import { StoreDetailPage } from "~/modules/store/pages/store-detail-page";
 
-export const productRoutes: RouteObject = {
+export const storeRoutes: RouteObject = {
   errorElement: <BlankPage />,
   children: [
     {

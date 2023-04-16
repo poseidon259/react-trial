@@ -2,10 +2,9 @@ import { createBrowserRouter } from 'react-router-dom'
 
 import { adminRoutes } from './admin-routes'
 import { authRoutes } from './auth-routes'
-import { lazyImport } from '~/helper'
-import { HomePage } from '~/modules'
 import { publicRoutes } from './public-routes'
 import { productRoutes } from './product-routes'
+import { storeRoutes } from './store-routes'
 
 // const { PrivacyPocily } = lazyImport(
 //   () => import("@/modules"),
@@ -20,5 +19,6 @@ export const router = createBrowserRouter([
   { ...authRoutes },
   // { ...adminRoutes },
   { ...publicRoutes},
-  { ...productRoutes }
+  { ...productRoutes },
+  { ...storeRoutes }
 ])

@@ -83,7 +83,7 @@ export const ProductCard = (props: any) => {
           <HStack>
             <Rating defaultValue={product.avg_rating ?? 0} size='sm' />
             <Text fontSize='sm' color={useColorModeValue('gray.600', 'gray.400')}>
-              {product.comments_count} Reviews
+              {product.comments_count ?? 0} Reviews
             </Text>
           </HStack>
           <PriceTag price={product.origin_price} salePrice={product.sale_price} currency='VND' />

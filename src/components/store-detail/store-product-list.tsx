@@ -1,15 +1,14 @@
-import { Text } from '@chakra-ui/react'
-import { SortProductCategory } from './sort-product-category'
-import { ProductCategoryList } from './product-category-list'
 
-export const ProductCategory = (props: any) => {
+import { ProductCategory } from '../product-category/product-category'
+
+export const StoreProductList = (props: any) => {
   const {
     products,
     options,
     sortPrice,
     popular,
-    newest,
     max,
+    newest,
     onSortPriceChangeCallback,
     handleNewestCallback,
     handlePopularCallback
@@ -29,22 +28,17 @@ export const ProductCategory = (props: any) => {
 
   return (
     <>
-      <SortProductCategory
+      <ProductCategory
+        products={products}
+        options={options}
         popular={popular}
         newest={newest}
-        options={options}
+        max={max}
         sortPrice={sortPrice}
+        onSortPriceChangeCallback={handleSortPrice}
         handlePopularCallback={handlePopular}
         handleNewestCallback={handleNewest}
-        handleChangeCallback={handleSortPrice}
       />
-      {products.length > 0 ? (
-        <ProductCategoryList products={products} max={max} />
-      ) : (
-        <Text textAlign={'center'} py={{ base: '8', md: '8' }}>
-          Không tồn tại sản phẩm
-        </Text>
-      )}
     </>
   )
 }
