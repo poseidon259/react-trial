@@ -1,68 +1,69 @@
-import { CloseButton, Flex, Link, Select, SelectProps, useColorModeValue } from '@chakra-ui/react'
+import { Box, CloseButton, Flex, FormLabel, Stack, Text, Tooltip } from '@chakra-ui/react'
 import { CartProductMeta } from './cart-product-meta'
 import { PriceTag } from '../other/price-tag'
+import { Controller, useForm } from 'react-hook-form'
+import { CustomInput } from '../elements'
+import { CartFormSchema } from '~/validations'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { getPrice } from '~/helper/getPrice'
 
-type CartItemProps = {
-  isGiftWrapping?: boolean
-  name: string
-  description: string
+type TCart = {
+  product_id: number
   quantity: number
-  price: number
-  currency: string
-  imageUrl: string
-  onChangeQuantity?: (quantity: number) => void
-  onClickGiftWrapping?: () => void
-  onClickDelete?: () => void
 }
 
-const QuantitySelect = (props: SelectProps) => {
-  return (
-    <Select
-      maxW='64px'
-      aria-label='Select quantity'
-      focusBorderColor={useColorModeValue('blue.500', 'blue.200')}
-      {...props}
-    >
-      <option value='1'>1</option>
-      <option value='2'>2</option>
-      <option value='3'>3</option>
-      <option value='4'>4</option>
-    </Select>
-  )
-}
+export const CartItem = (props: any) => {
+  const initialValues = {
+    quantity: 1
+  } as TCart
 
-export const CartItem = (props: CartItemProps) => {
-  const { isGiftWrapping, name, description, quantity, imageUrl, currency, price, onChangeQuantity, onClickDelete } =
-    props
+  const {
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm<TCart>({
+    defaultValues: initialValues,
+    resolver: zodResolver(CartFormSchema)
+  })
+
+  const { value, onChangeQuantity, onClickDelete } = props
 
   return (
     <Flex direction={{ base: 'column', md: 'row' }} justify='space-between' align='center'>
-      <CartProductMeta name={name} description={description} image={imageUrl} isGiftWrapping={isGiftWrapping} />
+      <CartProductMeta value={value} />
 
-      {/* Desktop */}
       <Flex width='full' justify='space-between' display={{ base: 'none', md: 'flex' }}>
-        <QuantitySelect
-          value={quantity}
-          onChange={(e) => {
-            onChangeQuantity?.(+e.currentTarget.value)
-          }}
-        />
-        <PriceTag price={price} currency={currency} />
-        <CloseButton aria-label={`Delete ${name} from cart`} onClick={onClickDelete} />
-      </Flex>
-
-      {/* Mobile */}
-      <Flex mt='4' align='center' width='full' justify='space-between' display={{ base: 'flex', md: 'none' }}>
-        <Link fontSize='sm' textDecor='underline'>
-          Delete
-        </Link>
-        <QuantitySelect
-          value={quantity}
-          onChange={(e) => {
-            onChangeQuantity?.(+e.currentTarget.value)
-          }}
-        />
-        <PriceTag price={price} currency={currency} />
+        <Stack>
+          <Controller
+            name='quantity'
+            control={control}
+            render={({ field }) => {
+              return (
+                <Flex flex={'1'} alignItems={'center'}>
+                  <FormLabel htmlFor='quantity' style={{ whiteSpace: 'nowrap' }}>
+                    Số lượng
+                  </FormLabel>
+                  <CustomInput
+                    {...field}
+                    id='quantity'
+                    type='number'
+                    defaultValue={value.quantity}
+                    onChange={(e) => {
+                      field.onChange(e)
+                      // onChangeQuantity(e.target.value)
+                    }}
+                    maxW={'100px'}
+                  />
+                  {errors.quantity && <Text variant='error'>{errors.quantity.message}</Text>}
+                </Flex>
+              )
+            }}
+          />
+        </Stack>
+        <PriceTag price={getPrice(value.sale_price, value.origin_price)} currency={'VND'} />
+        <Tooltip label={`Delete ${value.product_name} from cart`}>
+          <CloseButton aria-label={`Delete ${value.product_name} from cart`} />
+        </Tooltip>
       </Flex>
     </Flex>
   )

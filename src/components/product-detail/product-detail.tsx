@@ -8,6 +8,7 @@ import {
   Heading,
   Input,
   InputGroup,
+  Select,
   Stack,
   Text
 } from '@chakra-ui/react'
@@ -15,7 +16,16 @@ import {
 import { Rating } from '../other/rating'
 import { PriceTag } from '../other/price-tag'
 import { ProductImageSlider } from './product-images-slider'
-import { MasterField } from './master-field'
+import { Controller, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useMutationAddToCart } from '~/modules/order/api/add-to-cart.api'
+import { AddToCartFieldSchema, AddToCartNoFieldSchema } from '~/validations'
+
+type TAddToCart = {
+  product_id: number
+  quantity: number
+  child_master_field_id: string
+}
 
 export const ProductDetail = (props: any) => {
   const { quantityCallback, quantity, product, masterFieldCallback, masterField } = props
@@ -33,71 +43,155 @@ export const ProductDetail = (props: any) => {
     quantityCallback(quantity)
   }
 
+  const handleMasterFieldClick = (masterFieldId: any) => {
+    if (masterField === masterFieldId) {
+      masterFieldCallback('')
+    } else {
+      masterFieldCallback(masterFieldId)
+    }
+  }
+
+  const initialValues = {
+    product_id: product.id,
+    quantity: 1,
+    child_master_field_id: ''
+  } as TAddToCart
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors }
+  } = useForm<TAddToCart>({
+    defaultValues: initialValues,
+    resolver: zodResolver(product.master_fields.length > 0 ? AddToCartFieldSchema : AddToCartNoFieldSchema)
+    // resolver: zodResolver(AddToCartFieldSchema)
+  })
+
+  const { mutate, isLoading } = useMutationAddToCart()
+
+  const onSubmit = (data: TAddToCart) => {
+    data.product_id = product.id
+    data.quantity = quantity
+    mutate(data)
+  }
+
   return (
-    <>
+    <Box as={'form'} onSubmit={handleSubmit(onSubmit)}>
       <Flex gap={12} justifyContent={'center'} minH={'600px'}>
         <Box maxW={'50%'} mx={'auto'} flex={1}>
           <ProductImageSlider images={product.product_images} />
         </Box>
         <Box maxW={'50%'} flex={1}>
           <Stack>
-            <Heading as='h2' fontSize='2xl' pt='10px'>
-              {product.name}
-            </Heading>
-            <HStack>
-              <Rating defaultValue={product.avg_rating ?? 0} size='sm' />
-              <Text fontSize='sm' color={'gray.400'}>
-                {product.comments_count} Reviews
-              </Text>
-            </HStack>
-            {masterField ? (
-              <PriceTag salePrice={product.child_sale_price} price={product.child_origin_price} currency='VND' />
+            <Stack minH={'51vh'}>
+              <Heading as='h2' fontSize='2xl' pt='10px'>
+                {product.name}
+              </Heading>
+              <HStack>
+                <Rating defaultValue={product.avg_rating ?? 0} size='sm' />
+                <Text fontSize='sm' color={'gray.400'}>
+                  {product.comments_count} Reviews
+                </Text>
+              </HStack>
+              {masterField ? (
+                <PriceTag salePrice={product.child_sale_price} price={product.child_origin_price} currency='VND' />
               ) : (
-              <PriceTag salePrice={product.sale_price} price={product.origin_price} currency='VND' />
-            )}
-            <Text fontSize='md' fontWeight={'light'}>
-              {product.description_detail}
-            </Text>
-            <MasterField product={product} masterFieldCallback={masterFieldCallback} masterField={masterField} />
-            <FormControl id='quantity'>
-              <FormLabel fontSize='md'>Số lượng</FormLabel>
-              <InputGroup size='md'>
-                <Button
-                  onClick={handleDecreaseQuantity}
-                  isDisabled={quantity === 1}
-                  bg='gray.200'
-                  color='black'
-                  size='md'
-                  fontWeight='bold'
-                >
-                  -
-                </Button>
-                <Input
-                  type='number'
-                  value={quantity}
-                  min={1}
-                  onChange={(e) => handleChangeQuantity(parseInt(e.target.value) || 1)}
-                  textAlign='center'
-                  border='1px'
-                  borderColor='gray.300'
-                  fontWeight='bold'
-                  w='100px'
-                  px={{ base: '2', md: '4' }}
-                  mx={{ base: '2', md: '2' }}
-                />
-                <Button size='md' onClick={handleIncreaseQuantity} bg='gray.200' color='black' fontWeight='bold'>
-                  +
-                </Button>
-              </InputGroup>
-            </FormControl>
+                <PriceTag salePrice={product.sale_price} price={product.origin_price} currency='VND' />
+              )}
+              <Text fontSize='md' fontWeight={'light'}>
+                {product.description_detail}
+              </Text>
+              {product.master_fields.length > 0 && (
+                <>
+                  <Text textTransform={'capitalize'} fontSize='md'>
+                    {product.master_fields[0].name}
+                  </Text>
+                  <Controller
+                    name='child_master_field_id'
+                    control={control}
+                    render={({ field }) => (
+                      <Box>
+                        <Select
+                          {...field}
+                          placeholder={'Vui lòng chọn ' + product.master_fields[0].name}
+                          textTransform={'capitalize'}
+                          onChange={(e) => {
+                            field.onChange(e)
+                            handleMasterFieldClick(e.target.value)
+                          }}
+                        >
+                          {product.master_fields[0].childs.map((childMasterField: any) => (
+                            <option key={childMasterField.id} value={childMasterField.id}>
+                              {childMasterField.name}
+                            </option>
+                          ))}
+                        </Select>
+                        {errors.child_master_field_id && (
+                          <Text variant='error'>{errors.child_master_field_id.message}</Text>
+                        )}
+                      </Box>
+                    )}
+                  />
+                </>
+              )}
+              <FormControl id='quantity' isInvalid={!!errors.quantity}>
+                <FormLabel fontSize='md'>Số lượng</FormLabel>
+                <InputGroup size='md'>
+                  <Button
+                    onClick={handleDecreaseQuantity}
+                    isDisabled={quantity === 1}
+                    bg='gray.200'
+                    color='black'
+                    size='md'
+                    fontWeight='bold'
+                  >
+                    -
+                  </Button>
+                  <Controller
+                    name='quantity'
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <Input
+                          {...field}
+                          name='quantity'
+                          id='quantity'
+                          type='number'
+                          value={quantity}
+                          min={1}
+                          onChange={(e) => handleChangeQuantity(parseInt(e.target.value) || 1)}
+                          textAlign='center'
+                          border='1px'
+                          borderColor='gray.300'
+                          fontWeight='bold'
+                          w='100px'
+                          px={{ base: '2', md: '4' }}
+                          mx={{ base: '2', md: '2' }}
+                        />
+                      </>
+                    )}
+                  />
+                  <Button size='md' onClick={handleIncreaseQuantity} bg='gray.200' color='black' fontWeight='bold'>
+                    +
+                  </Button>
+                </InputGroup>
+              </FormControl>
+            </Stack>
             <Box w={'full'} pt={'30px'}>
-              <Button size='lg' color='white' backgroundColor={'primary'} w={'full'}>
+              <Button
+                type='submit'
+                size='lg'
+                color='white'
+                backgroundColor={'primary'}
+                w={'full'}
+                isLoading={isLoading}
+              >
                 Thêm vào giỏ hàng
               </Button>
             </Box>
           </Stack>
         </Box>
       </Flex>
-    </>
+    </Box>
   )
 }

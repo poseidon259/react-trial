@@ -76,6 +76,10 @@ export const Nav = () => {
     navigate(navigationFn.HOME)
   }
 
+  const handleToCart = () => {
+    navigate(navigationFn.CART)
+  }
+
   return (
     <Box as='section' pb={{ base: '12', md: '12' }}>
       <Box as='nav' bg='bg-surface' boxShadow='sm'>
@@ -116,7 +120,14 @@ export const Nav = () => {
                 {isLogin ? (
                   <Flex alignItems={'center'}>
                     <Icon as={BsFillBagHeartFill} boxSize={'23px'} mr={'15px'} color={'primary'} cursor={'pointer'} />
-                    <Icon as={BsFillCartFill} boxSize={'23px'} mr={'20px'} color={'primary'} cursor={'pointer'} />
+                    <Icon
+                      as={BsFillCartFill}
+                      boxSize={'23px'}
+                      mr={'20px'}
+                      color={'primary'}
+                      cursor={'pointer'}
+                      onClick={() => handleToCart()}
+                    />
                     <Menu>
                       <MenuButton>
                         <Wrap>

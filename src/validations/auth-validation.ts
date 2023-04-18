@@ -1,5 +1,68 @@
 import { z } from 'zod'
 
+export const CartFormSchema = z.object({
+  product_id: z
+    .number({
+      required_error: 'Product is required',
+      invalid_type_error: 'Invalid product id'
+    })
+    .int(),
+  quantity: z
+    .number({
+      required_error: 'Quantity is required',
+      invalid_type_error: 'Invalid quantity'
+    })
+    .int()
+    .min(1)
+})
+
+export const AddToCartNoFieldSchema = z.object({
+  product_id: z
+    .number({
+      required_error: 'Product is required',
+      invalid_type_error: 'Invalid product id'
+    })
+    .int(),
+  quantity: z
+    .number({
+      required_error: 'Quantity is required',
+      invalid_type_error: 'Invalid quantity'
+    })
+    .int()
+    .min(1)
+})
+
+export const AddToCartFieldSchema = z.object({
+  product_id: z
+    .number({
+      required_error: 'Product is required',
+      invalid_type_error: 'Invalid product id'
+    })
+    .int(),
+  quantity: z
+    .number({
+      required_error: 'Quantity is required',
+      invalid_type_error: 'Invalid quantity'
+    })
+    .int()
+    .min(1),
+  child_master_field_id: z
+    .string({
+      required_error: 'Child master field id is required',
+      invalid_type_error: 'Invalid child master field id'
+    })
+    .trim()
+    .refine(
+      (value) => {
+        const numberValue = parseInt(value, 10)
+        return !isNaN(numberValue) && Number.isInteger(numberValue) && numberValue >= 1
+      },
+      {
+        message: 'Please select a valid option'
+      }
+    )
+})
+
 export const CommentFormClientSchema = z.object({
   content: z
     .string({

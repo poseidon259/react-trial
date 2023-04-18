@@ -40,7 +40,7 @@ export const SortProductCategory = (props: any) => {
         </Button>
       </Box>
       <Box pl={{ base: '4', md: '4' }}>
-        <CustomSelect options={options} placeholder={'Theo giá'} sortPrice={sortPrice} handleChangeCallback={handleChangeCallback} />
+        <CustomSelect options={options} placeholder={'Theo giá'} value={sortPrice} handleChangeCallback={handleChangeCallback} />
       </Box>
     </Box>
   )

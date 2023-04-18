@@ -1,14 +1,8 @@
 import { Box, Image, Stack, Text, useColorModeValue as mode } from '@chakra-ui/react'
 
-export type CartProductMetaProps = {
-  isGiftWrapping?: boolean
-  name: string
-  description: string
-  image: string
-}
-
-export const CartProductMeta = (props: CartProductMetaProps) => {
-  const { image, name, description } = props
+export const CartProductMeta = (props: any) => {
+  const { value } = props
+  console.log(value)
   return (
     <Stack direction='row' spacing='5' width='full'>
       <Image
@@ -16,17 +10,22 @@ export const CartProductMeta = (props: CartProductMetaProps) => {
         width='120px'
         height='120px'
         fit='cover'
-        src={image}
-        alt={name}
+        src={value.product_images[0].image}
         draggable='false'
         loading='lazy'
       />
       <Box pt='4'>
         <Stack spacing='0.5'>
-          <Text fontWeight='medium'>{name}</Text>
-          <Text color={mode('gray.600', 'gray.400')} fontSize='sm'>
-            {description}
-          </Text>
+          <Text fontWeight='medium'>{value.product_name}</Text>
+          {value.master_field_name ? (
+            <Text color={mode('gray.600', 'gray.400')} fontSize='sm' textTransform={'capitalize'}>
+              {value.master_field_name}: {value.child_master_field_name}
+            </Text>
+          ) : (
+            <Text color={mode('gray.600', 'gray.400')} fontSize='sm'>
+              Không có mô tả
+            </Text>
+          )}
         </Stack>
       </Box>
     </Stack>

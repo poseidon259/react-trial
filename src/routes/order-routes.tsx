@@ -1,6 +1,5 @@
 import { RouteObject } from "react-router";
 import { BlankPage } from "~/modules";
-import { ProductDetailPage } from "~/modules/product";
 import { navigationFn } from "./navigation-fn";
 import { CartPage } from "~/modules/order";
 

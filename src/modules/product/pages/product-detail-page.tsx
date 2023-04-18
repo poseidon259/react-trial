@@ -22,7 +22,7 @@ export const ProductDetailPage = () => {
   const [lastPage, setLastPage] = useState(1)
   const isLogin = localStorage.getItem('user') ?? false
   const [quantity, setQuantity] = useState(1)
-  const [masterField, setMasterField] = useState(null)
+  const [masterField, setMasterField] = useState('')
   const { toastSuccess, toastError } = useCustomToast()
   const [createdComment, setCreatedComment] = useState(1)
   const navigate = useNavigate()
