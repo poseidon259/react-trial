@@ -1,8 +1,14 @@
-import { Box, Image, Stack, Text, useColorModeValue as mode } from '@chakra-ui/react'
+import { Box, Image, Link, Stack, Text, useColorModeValue as mode } from '@chakra-ui/react'
+import { useNavigate } from 'react-router'
 
 export const CartProductMeta = (props: any) => {
   const { value } = props
-  console.log(value)
+  const navigate = useNavigate()
+
+  const handleToProduct = (id: any) => {
+    navigate(`/product/${id}`)
+  }
+
   return (
     <Stack direction='row' spacing='5' width='full'>
       <Image
@@ -16,7 +22,15 @@ export const CartProductMeta = (props: any) => {
       />
       <Box pt='4'>
         <Stack spacing='0.5'>
-          <Text fontWeight='medium'>{value.product_name}</Text>
+          <Text
+            cursor={'pointer'}
+            onClick={() => handleToProduct(value.product_id)}
+            _hover={{
+              color: 'primary'
+            }}
+          >
+            {value.product_name}
+          </Text>
           {value.master_field_name ? (
             <Text color={mode('gray.600', 'gray.400')} fontSize='sm' textTransform={'capitalize'}>
               {value.master_field_name}: {value.child_master_field_name}

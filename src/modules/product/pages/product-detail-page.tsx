@@ -24,11 +24,24 @@ export const ProductDetailPage = () => {
   const [quantity, setQuantity] = useState(1)
   const [masterField, setMasterField] = useState('')
   const { toastSuccess, toastError } = useCustomToast()
-  const [createdComment, setCreatedComment] = useState(1)
+  const [createdComment, setCreatedComment] = useState(false)
   const navigate = useNavigate()
 
-  const handleCreateComment = (number: any) => {
-    setCreatedComment(number)
+  const handleCreateComment = () => {
+    setCreatedComment(!createdComment)
+    axiosClient
+      .get(`client/product/${id}/comments`, {
+        params: {
+          limit: limit,
+          page: currentPage
+        }
+      })
+      .then((res: any) => {
+        setComments(res.comments)
+        setLastPage(res.last_page)
+        setCurrentPage(res.current_page)
+        setIsLoadingComment(false)
+      })
   }
 
   const handleQuantityCallback = (quantity: number) => {
@@ -126,7 +139,7 @@ export const ProductDetailPage = () => {
             </Box>
           </Box>
         )}
-        {isLogin && <CommentPublicForm callback={ handleCreateComment } />}
+        {isLogin && <CommentPublicForm callback={handleCreateComment} />}
       </DefaultLayout>
     </>
   )

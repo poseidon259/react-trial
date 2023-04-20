@@ -64,7 +64,6 @@ export const ProductDetail = (props: any) => {
   } = useForm<TAddToCart>({
     defaultValues: initialValues,
     resolver: zodResolver(product.master_fields.length > 0 ? AddToCartFieldSchema : AddToCartNoFieldSchema)
-    // resolver: zodResolver(AddToCartFieldSchema)
   })
 
   const { mutate, isLoading } = useMutationAddToCart()
@@ -93,14 +92,17 @@ export const ProductDetail = (props: any) => {
                   {product.comments_count} Reviews
                 </Text>
               </HStack>
-              {masterField ? (
-                <PriceTag salePrice={product.child_sale_price} price={product.child_origin_price} currency='VND' />
-              ) : (
-                <PriceTag salePrice={product.sale_price} price={product.origin_price} currency='VND' />
-              )}
-              <Text fontSize='md' fontWeight={'light'}>
+              <PriceTag salePrice={product.sale_price} price={product.origin_price} currency='VND' />
+              <Box fontSize='md' fontWeight={'light'}>
+                <Text pt={'10px'}>Mô tả sản phẩm</Text>
                 {product.description_detail}
-              </Text>
+              </Box>
+                <Box fontSize='md' fontWeight={'light'}>
+                  <Text as={'span'} fontWeight={'bold'} pt={'10px'} pr={'10px'}>
+                    Tồn kho:
+                  </Text>
+                  {product.stock}
+                </Box>
               {product.master_fields.length > 0 && (
                 <>
                   <Text textTransform={'capitalize'} fontSize='md'>

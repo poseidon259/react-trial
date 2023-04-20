@@ -1,12 +1,6 @@
 import { z } from 'zod'
 
-export const CartFormSchema = z.object({
-  product_id: z
-    .number({
-      required_error: 'Product is required',
-      invalid_type_error: 'Invalid product id'
-    })
-    .int(),
+export const UpdateQuantityCartFormSchema = z.object({
   quantity: z
     .number({
       required_error: 'Quantity is required',

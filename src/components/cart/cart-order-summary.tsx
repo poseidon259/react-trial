@@ -1,53 +1,66 @@
-import { Button, Flex, Heading, Link, Stack, Text, useColorModeValue as mode } from '@chakra-ui/react'
+import { Button, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import { FaArrowRight } from 'react-icons/fa'
 import { formatPrice } from '../other/price-tag'
+import { getPrice } from '~/helper/getPrice'
 
-type OrderSummaryItemProps = {
-  label: string
-  value?: string
-  children?: React.ReactNode
-}
-
-const OrderSummaryItem = (props: OrderSummaryItemProps) => {
-  const { label, value, children } = props
+const OrderSummaryItem = (props: any) => {
+  const { label, value } = props
   return (
     <Flex justify='space-between' fontSize='sm'>
-      <Text fontWeight='medium' color={mode('gray.600', 'gray.400')}>
-        {label}
-      </Text>
-      {value ? <Text fontWeight='medium'>{value}</Text> : children}
+      <Text fontWeight='medium'>{label}</Text>
+      <Text fontWeight='medium'>{value}</Text>
     </Flex>
   )
 }
 
-export const CartOrderSummary = () => {
+const subTotal = (cart: any) => {
+  return cart.cart_items.reduce((acc: any, item: any) => {
+    return (
+      acc +
+      item.quantity * getPrice(item.sale_price, item.origin_price)
+    )
+  }, 0)
+}
+
+export const CartOrderSummary = (props: any) => {
+  const { value } = props
+
   return (
     <Stack spacing='8' borderWidth='1px' rounded='lg' padding='8' width='full'>
-      <Heading size='md'>Order Summary</Heading>
+      <Heading size='md'>Tóm tắt đơn hàng</Heading>
 
       <Stack spacing='6'>
-        <OrderSummaryItem label='Subtotal' value={formatPrice(597)} />
-        <OrderSummaryItem label='Shipping + Tax'>
-          <Link href='#' textDecor='underline'>
-            Calculate shipping
-          </Link>
-        </OrderSummaryItem>
-        <OrderSummaryItem label='Coupon Code'>
+        <OrderSummaryItem
+          label='Subtotal'
+          value={formatPrice(subTotal(value), {
+            currency: 'VND'
+          })}
+        />
+        <OrderSummaryItem
+          label='Shipping + Tax'
+          value={formatPrice(value.shipping_fee, {
+            currency: 'VND'
+          })}
+        />
+
+        {/* <OrderSummaryItem label='Coupon Code'>
           <Link href='#' textDecor='underline'>
             Add coupon code
           </Link>
-        </OrderSummaryItem>
+        </OrderSummaryItem> */}
         <Flex justify='space-between'>
           <Text fontSize='lg' fontWeight='semibold'>
-            Total
+            Tổng tiền
           </Text>
           <Text fontSize='xl' fontWeight='extrabold'>
-            {formatPrice(597)}
+            {formatPrice(subTotal(value) + value.shipping_fee, {
+              currency: 'VND'
+            })}
           </Text>
         </Flex>
       </Stack>
       <Button colorScheme='blue' size='lg' fontSize='md' rightIcon={<FaArrowRight />}>
-        Checkout
+        Thanh toán
       </Button>
     </Stack>
   )

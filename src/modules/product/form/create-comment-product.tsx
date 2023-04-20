@@ -30,7 +30,7 @@ export const CommentPublicForm = (props: any) => {
 
   const onSubmit = (data: TComment) => {
     mutate(data)
-    callback((prevState: any)  => prevState  + 1)
+    callback()
   }
 
   return (
