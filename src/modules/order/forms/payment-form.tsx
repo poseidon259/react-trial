@@ -17,6 +17,7 @@ import { CheckoutOrderSumary } from '~/components/order/checkout-order-sumary'
 import { FaCreditCard, FaMoneyBill } from 'react-icons/fa'
 import { MdOutlinePayments } from 'react-icons/md'
 import { CreditCardForm } from '~/modules/order/forms/credit-card-form'
+import { VNPayForm } from './vnpay-form'
 
 export const PaymentForm = (props: any) => {
   const { checkoutData, nextStep, activeStep, prevStep, isLastStep } = props
@@ -62,7 +63,7 @@ export const PaymentForm = (props: any) => {
             </Flex>
 
             {selectedOption === 'card' && <CreditCardForm />}
-            {/* {selectedOption === 'vnpay' && <VNPayForm />} */}
+            {selectedOption === 'vnpay' && <VNPayForm />}
           </Box>
           <Box flex={'4'} rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
             <Box

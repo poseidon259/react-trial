@@ -9,23 +9,23 @@ export const CreditCardForm = () => {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
 
-  const handleCvcChange = (e) => {
+  const handleCvcChange = (e: any) => {
     setCvc(e.target.value)
   }
 
-  const handleExpiryChange = (e) => {
+  const handleExpiryChange = (e: any) => {
     setExpiry(e.target.value)
   }
 
-  const handleFocusChange = (e) => {
+  const handleFocusChange = (e: any) => {
     setFocus(e.target.name)
   }
 
-  const handleNameChange = (e) => {
+  const handleNameChange = (e: any) => {
     setName(e.target.value)
   }
 
-  const handleNumberChange = (e) => {
+  const handleNumberChange = (e: any) => {
     setNumber(e.target.value)
   }
 
