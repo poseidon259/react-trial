@@ -36,6 +36,10 @@ export const CartPage = () => {
     }
   }
 
+  const handleToHome = () => {
+    navigate(navigationFn.HOME)
+  }
+
   useEffect(() => {
     axiosClient
       .get('client/get_my_cart')
@@ -71,7 +75,6 @@ export const CartPage = () => {
       <Box
         maxW={{ base: '3xl', lg: '7xl' }}
         mx='auto'
-        px={{ base: '4', md: '8', lg: '12' }}
         py={{ base: '6', md: '8', lg: '12' }}
       >
         {isLoadingCart ? (
@@ -140,9 +143,18 @@ export const CartPage = () => {
             </Stack>
 
             <Flex direction='column' alignItems='center' flex='1'>
-              <CartOrderSummary value={cart} />
+              <CartOrderSummary value={cart} isCheck={isCheck} />
               <HStack mt='6' fontWeight='semibold'>
-                <Link color={'blue.500'}>Tiếp tục mua hàng</Link>
+                <Text
+                  color={'blue.500'}
+                  _hover={{
+                    color: 'primary',
+                    cursor: 'pointer'
+                  }}
+                  onClick={handleToHome}
+                >
+                  Tiếp tục mua hàng
+                </Text>
               </HStack>
             </Flex>
           </Stack>

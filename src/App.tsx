@@ -5,6 +5,7 @@ import { router } from './routes'
 import { themeOverride } from './libs'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-credit-cards/es/styles-compiled.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {

@@ -13,6 +13,7 @@ export const navigationFn = {
   STORE_DETAIL: '/store/:id',
 
   CART: '/cart',
+  CHECKOUT: '/checkout',
 
   HOME_INFORMATION: '/home',
   CHANGE_PASSWORD: '/admin/change-password',
