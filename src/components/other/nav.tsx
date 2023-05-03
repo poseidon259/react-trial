@@ -32,7 +32,7 @@ import { useEffect, useState } from 'react'
 import axiosClient from '~/libs/axios/axiosClient'
 import { BsFillBagHeartFill, BsFillCartFill } from 'react-icons/bs'
 import { AiOutlineLogout } from 'react-icons/ai'
-import { MdOutlineSearch, MdPublishedWithChanges, MdTipsAndUpdates } from 'react-icons/md'
+import { MdOutlineHistory, MdOutlineSearch, MdPublishedWithChanges, MdTipsAndUpdates } from 'react-icons/md'
 import { PhoneIcon } from '@chakra-ui/icons'
 
 export const Nav = () => {
@@ -78,6 +78,10 @@ export const Nav = () => {
 
   const handleToCart = () => {
     navigate(navigationFn.CART)
+  }
+
+  const handleToOrderHistory = () => {
+    navigate(navigationFn.ORDER_HISTORY)
   }
 
   return (
@@ -142,6 +146,9 @@ export const Nav = () => {
                         </MenuItem>
                         <MenuItem icon={<Icon as={MdPublishedWithChanges} />} onClick={handleLogout}>
                           Đổi mật khẩu
+                        </MenuItem>
+                        <MenuItem icon={<Icon as={MdOutlineHistory} />} onClick={handleToOrderHistory} >
+                          Lịch sử đơn hàng
                         </MenuItem>
                         <MenuItem icon={<Icon as={AiOutlineLogout} />} onClick={handleLogout}>
                           Đăng xuất

@@ -62,7 +62,7 @@ export const DeliveryFormSchema = z.object({
     .max(255, {
       message: 'The address field can only enter less than 255 characters'
     }),
-  province: z
+  province_id: z
     .string({
       required_error: 'Province is required',
       invalid_type_error: 'Invalid province'
@@ -71,7 +71,7 @@ export const DeliveryFormSchema = z.object({
     .min(1, {
       message: 'The province field can only enter more than 1 characters'
     }),
-  district: z
+  district_id: z
     .string({
       required_error: 'District is required',
       invalid_type_error: 'Invalid district'
@@ -80,7 +80,7 @@ export const DeliveryFormSchema = z.object({
     .min(1, {
       message: 'The district field can only enter more than 1 characters'
     }),
-  ward: z
+  ward_id: z
     .string({
       required_error: 'Ward is required',
       invalid_type_error: 'Invalid ward'
@@ -97,5 +97,50 @@ export const DeliveryFormSchema = z.object({
     .trim()
     .max(3000, {
       message: 'The note field can only enter less than 3000 characters'
+    })
+})
+
+export const CODFormSchema = z.object({
+  payment_method: z
+    .string({
+      required_error: 'Payment method is required',
+      invalid_type_error: 'Invalid payment method'
+    })
+    .trim()
+    .min(1, {
+      message: 'Vui lòng chọn phương thức thanh toán'
+    })
+})
+
+export const CardFormSchema = z.object({
+  payment_method: z
+    .string({
+      required_error: 'Payment method is required',
+      invalid_type_error: 'Invalid payment method'
+    })
+    .trim()
+    .min(1, {
+      message: 'Vui lòng chọn phương thức thanh toán'
+    })
+})
+
+export const VNpayFormSchema = z.object({
+  payment_method: z
+    .string({
+      required_error: 'Payment method is required',
+      invalid_type_error: 'Invalid payment method'
+    })
+    .trim()
+    .min(1, {
+      message: 'Vui lòng chọn phương thức thanh toán'
+    }),
+  payment_note: z
+    .string({
+      required_error: 'Payment note is required',
+      invalid_type_error: 'Invalid payment note'
+    })
+    .trim()
+    .max(100, {
+      message: 'Nội dung thanh toán không được vượt quá 100 ký tự'
     })
 })

@@ -8,3 +8,21 @@ export const LIMIT_PER_PAGE_PRODUCT_CATEGORY = 6
 export const LIMIT_PER_PAGE_STORE_PRODUCT = 12
 export const TRUE = 1
 export const FALSE = 0
+
+export const PAYMENT_METHOD = {
+  COD: '1',
+  CARD: '2',
+  VNPAY: '3'
+}
+
+export const ORDER_STATUS = {
+  PENDING: 1,
+  CONFIRMED: 2,
+  SHIPPING: 3,
+  DELIVERED: 4,
+  CANCELLED: 5
+}
+
+export const ORDER_STATUS_TEXT = ['', 'Đang chờ thanh toán', 'Đã xác nhận', 'Đang giao hàng', 'Đã giao hàng', 'Đã hủy']
+
+export const ORDER_STATUS_COLOR = ['', 'orange.300', 'primary', 'teal.300', 'green.300', 'red.600']

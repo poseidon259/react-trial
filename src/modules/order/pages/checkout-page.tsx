@@ -8,18 +8,32 @@ import { PaymentForm } from '../forms/payment-form'
 import { useEffect, useState } from 'react'
 import { useCustomToast } from '~/hooks'
 import axiosClient from '~/libs/axios/axiosClient'
+import { getPrice } from '~/helper/getPrice'
+import { ConfirmPayment } from '~/components/order/confirm-payment'
 
 const steps = [{ label: 'Thông tin vận chuyển' }, { label: 'Thanh toán' }, { label: 'Xác nhận thông tin' }]
 
 export const CheckoutPage = ({ variant }: { variant: 'circles' | 'circles-alt' | 'simple' | undefined }) => {
   const checkoutItem = JSON.parse(localStorage.getItem('checkoutItem') || '[]')
-  const [checkoutData, setCheckoutData] = useState([])
+  const [checkoutData, setCheckoutData] = useState({} as any)
   const [deliveryData, setDeliveryData] = useState({} as any)
+  const [paymentData, setPaymentData] = useState({} as any)
   const navigate = useNavigate()
   const { toastSuccess, toastError } = useCustomToast()
 
+  const { nextStep, prevStep, reset, activeStep } = useSteps({
+    initialStep: 0
+  })
+  const isLastStep = activeStep === steps.length - 1
+  const hasCompletedAllSteps = activeStep === steps.length
+  const bg = useColorModeValue('blue.200', 'blue.700')
+
   const handleDeliveryData = (data: any) => {
     setDeliveryData(data)
+  }
+
+  const handlePaymentData = (data: any) => {
+    setPaymentData(data)
   }
 
   useEffect(() => {
@@ -28,6 +42,12 @@ export const CheckoutPage = ({ variant }: { variant: 'circles' | 'circles-alt' |
       toastError('Vui lòng chọn sản phẩm trước khi thanh toán')
     }
   }, [])
+
+  useEffect(() => {
+    if (hasCompletedAllSteps) {
+      navigate(navigationFn.ORDER_HISTORY)
+    }
+  }, [hasCompletedAllSteps, navigate])
 
   useEffect(() => {
     axiosClient
@@ -41,16 +61,17 @@ export const CheckoutPage = ({ variant }: { variant: 'circles' | 'circles-alt' |
       })
   }, [])
 
-  const { nextStep, prevStep, reset, activeStep } = useSteps({
-    initialStep: 0
-  })
-  const isLastStep = activeStep === steps.length - 1
-  const hasCompletedAllSteps = activeStep === steps.length
-  const bg = useColorModeValue('blue.200', 'blue.700')
-
   const handleToHome = () => {
     navigate(navigationFn.HOME)
   }
+
+  const subTotal = (items: any) => {
+    return items.cart_items?.reduce((acc: any, item: any) => {
+      return acc + item.quantity * getPrice(item.sale_price, item.origin_price)
+    }, 0)
+  }
+
+  const total = subTotal(checkoutData) + checkoutData.shipping_fee
 
   return (
     <DefaultLayout>
@@ -67,6 +88,7 @@ export const CheckoutPage = ({ variant }: { variant: 'circles' | 'circles-alt' |
                   isLastStep={isLastStep}
                   deliveryData={deliveryData}
                   handleDeliveryData={handleDeliveryData}
+                  total={total}
                 />
               )}
               {index === 1 && (
@@ -76,43 +98,26 @@ export const CheckoutPage = ({ variant }: { variant: 'circles' | 'circles-alt' |
                   nextStep={nextStep}
                   prevStep={prevStep}
                   isLastStep={isLastStep}
+                  total={total}
+                  paymentData={paymentData}
+                  handlePaymentData={handlePaymentData}
+                />
+              )}
+              {index === 2 && (
+                <ConfirmPayment
+                  checkoutData={checkoutData}
+                  deliveryData={deliveryData}
+                  paymentData={paymentData}
+                  activeStep={activeStep}
+                  nextStep={nextStep}
+                  prevStep={prevStep}
+                  isLastStep={isLastStep}
+                  handleToHome={handleToHome}
                 />
               )}
             </Step>
           ))}
         </Steps>
-        {hasCompletedAllSteps && (
-          <Box sx={{ bg, my: 8, p: 8, rounded: 'md' }}>
-            <Heading fontSize='xl' textAlign={'center'}>
-              Woohoo! All steps completed! 🎉
-            </Heading>
-          </Box>
-        )}
-        <Flex width='100%' justify='flex-end' gap={4} my={'10px'}>
-          {hasCompletedAllSteps ? (
-            <HStack mt='6' fontWeight='semibold'>
-              <Text
-                color={'blue.500'}
-                _hover={{
-                  color: 'primary',
-                  cursor: 'pointer'
-                }}
-                onClick={handleToHome}
-              >
-                Tiếp tục mua hàng
-              </Text>
-            </HStack>
-          ) : (
-            <>
-              <Button isDisabled={activeStep === 0} onClick={prevStep} size='sm' variant='ghost'>
-                Trước
-              </Button>
-              <Button size='sm' onClick={nextStep}>
-                {isLastStep ? 'Hoàn thành' : 'Tiếp theo'}
-              </Button>
-            </>
-          )}
-        </Flex>
       </Flex>
     </DefaultLayout>
   )

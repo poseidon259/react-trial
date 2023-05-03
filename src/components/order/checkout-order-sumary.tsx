@@ -25,13 +25,13 @@ export const CheckoutOrderSumary = (props: any) => {
     <Stack spacing='8' rounded='lg' pt='8' width='full'>
       <Stack spacing='6'>
         <OrderSummaryItem
-          label='Subtotal'
+          label='Tổng giá sản phẩm'
           value={formatPrice(subTotal(value), {
             currency: 'VND'
           })}
         />
         <OrderSummaryItem
-          label='Shipping + Tax'
+          label='Phí vận chuyển + thuế'
           value={formatPrice(value.shipping_fee, {
             currency: 'VND'
           })}

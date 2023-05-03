@@ -19,17 +19,17 @@ export const CommentCard = (props: any) => {
           />
           <Box>
             <Text fontWeight='bold' color='primary.500' mb='1'>
-              { fullName(comment.first_name, comment.last_name)  }
+              {fullName(comment.first_name, comment.last_name)}
             </Text>
-            <Rating defaultValue={ comment.rating } />
+            <Rating defaultValue={comment.rating} />
             <Text color='gray.500' fontSize='sm' mb='0'>
-              { formatDate(comment.updated_at) }
+              {formatDate(comment.updated_at)}
             </Text>
           </Box>
         </Flex>
         <Box p='6'>
           <Text mb='4' pb='2' fontWeight={'regular'}>
-            { comment.content }
+            {comment.content}
           </Text>
         </Box>
       </Box>

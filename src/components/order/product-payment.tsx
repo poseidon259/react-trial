@@ -1,4 +1,4 @@
-import { Box, Flex, Stack, Text } from '@chakra-ui/react'
+import { Box, Flex, Text } from '@chakra-ui/react'
 import { PriceTag } from '../other/price-tag'
 import { getPrice } from '~/helper/getPrice'
 import { ProductCartPayment } from './product-card-payment'

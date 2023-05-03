@@ -14,6 +14,9 @@ export const navigationFn = {
 
   CART: '/cart',
   CHECKOUT: '/checkout',
+  CHECKOUT_VNPAY: '/checkout/payment_vn_pay',
+  ORDER_HISTORY: '/order-history',
+  ORDER_DETAIL: '/order-history/:id',
 
   HOME_INFORMATION: '/home',
   CHANGE_PASSWORD: '/admin/change-password',

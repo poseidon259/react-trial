@@ -26,9 +26,9 @@ import { DeliveryFormSchema } from '~/validations/checkout-validation'
 type TDelivery = {
   first_name: string
   last_name: string
-  province: number
-  district: number
-  ward: number
+  province_id: number
+  district_id: number
+  ward_id: number
   house_number: string
   phone_number: string
   email: string
@@ -48,9 +48,9 @@ export const DeliveryForm = (props: any) => {
   const initialValues = {
     first_name: '',
     last_name: '',
-    province: 0,
-    district: 0,
-    ward: 0,
+    province_id: 0,
+    district_id: 0,
+    ward_id: 0,
     house_number: '',
     phone_number: '',
     email: '',
@@ -159,12 +159,12 @@ export const DeliveryForm = (props: any) => {
               </HStack>
               <HStack>
                 <Controller
-                  name='province'
+                  name='province_id'
                   control={control}
                   render={({ field }) => (
                     <Box w='100%'>
-                      <FormControl id='province' isRequired>
-                        <FormLabel htmlFor='province'>Thành phố</FormLabel>
+                      <FormControl id='province_id' isRequired>
+                        <FormLabel htmlFor='province_id'>Thành phố</FormLabel>
                         <Select
                           {...field}
                           placeholder={'Chọn thành phố'}
@@ -181,17 +181,17 @@ export const DeliveryForm = (props: any) => {
                           ))}
                         </Select>
                       </FormControl>
-                      {errors.province && <Text variant='error'>{errors.province.message}</Text>}
+                      {errors.province_id && <Text variant='error'>{errors.province_id.message}</Text>}
                     </Box>
                   )}
                 />
                 <Controller
-                  name='district'
+                  name='district_id'
                   control={control}
                   render={({ field }) => (
                     <Box w='100%'>
-                      <FormControl id='district' isRequired>
-                        <FormLabel htmlFor='district'>Quận/Huyện</FormLabel>
+                      <FormControl id='district_id' isRequired>
+                        <FormLabel htmlFor='district_id'>Quận/Huyện</FormLabel>
                         <Select
                           {...field}
                           placeholder={'Chọn quận/huyện'}
@@ -208,17 +208,17 @@ export const DeliveryForm = (props: any) => {
                           ))}
                         </Select>
                       </FormControl>
-                      {errors.district && <Text variant='error'>{errors.district.message}</Text>}
+                      {errors.district_id && <Text variant='error'>{errors.district_id.message}</Text>}
                     </Box>
                   )}
                 />
                 <Controller
-                  name='ward'
+                  name='ward_id'
                   control={control}
                   render={({ field }) => (
                     <Box w='100%'>
-                      <FormControl id='ward' isRequired>
-                        <FormLabel htmlFor='ward'>Phường/Xã</FormLabel>
+                      <FormControl id='ward_id' isRequired>
+                        <FormLabel htmlFor='ward_id'>Phường/Xã</FormLabel>
                         <Select
                           {...field}
                           placeholder={'Chọn phường/xã'}
@@ -234,7 +234,7 @@ export const DeliveryForm = (props: any) => {
                             </option>
                           ))}
                         </Select>
-                        {errors.ward && <Text variant='error'>{errors.ward.message}</Text>}
+                        {errors.ward_id && <Text variant='error'>{errors.ward_id.message}</Text>}
                       </FormControl>
                     </Box>
                   )}

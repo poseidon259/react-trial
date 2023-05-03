@@ -36,13 +36,13 @@ export const CartOrderSummary = (props: any) => {
 
       <Stack spacing='6'>
         <OrderSummaryItem
-          label='Subtotal'
+          label='Tổng tiền sản phẩm'
           value={formatPrice(subTotal(value), {
             currency: 'VND'
           })}
         />
         <OrderSummaryItem
-          label='Shipping + Tax'
+          label='Phí vận chuyển + thuế'
           value={formatPrice(value.shipping_fee, {
             currency: 'VND'
           })}

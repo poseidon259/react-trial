@@ -32,7 +32,7 @@ export const ProductCartPayment = (props: any) => {
           >
             {value.product_name}
           </Text>
-          {value.master_field_name ? (
+          {value.child_master_field_id ? (
             <Text color={mode('gray.600', 'gray.400')} fontSize='sm' textTransform={'capitalize'}>
               {value.master_field_name}: {value.child_master_field_name}
             </Text>

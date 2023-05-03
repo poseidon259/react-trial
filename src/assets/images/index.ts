@@ -1,7 +1,14 @@
-import authBg from "./auth-bg.png";
+
 import noImage from "./no-image.png";
+import visa from "./vs.png"
+import vnpay from "./vnpay.jpg"
+import cod from "./cod.jpg"
+import vnpay2 from "./vnpay2.png"
 
 export const Images = {
-  authBg,
   noImage,
+  visa,
+  vnpay,
+  cod,
+  vnpay2
 };
