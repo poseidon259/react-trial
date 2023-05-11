@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Heading, Skeleton, Stack, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
+import { OrderStatusBadge } from '~/components/order/order-status-badge'
 import { ProductPayment } from '~/components/order/product-payment'
 import { formatPrice } from '~/components/other/price-tag'
 import { ORDER_STATUS, PAYMENT_METHOD } from '~/configs'
@@ -31,6 +32,9 @@ export const OrderHistoryDetailPage = () => {
   const paymentVNPay = () => {
     axiosClient.post(`/order/checkout/payment_vn_pay/${id}`).then((res: any) => {
       window.location.href = res
+    })
+    .catch((err) => {
+      console.log(err)
     })
   }
 
@@ -107,8 +111,13 @@ export const OrderHistoryDetailPage = () => {
                   })}`}</Text>
                 </Text>
 
+                <Text>
+                  Trạng thái đơn hàng:
+                  <OrderStatusBadge status={order.status} />
+                </Text>
+
                 <Box>
-                  {order.status === ORDER_STATUS.PENDING && order.payment_method != PAYMENT_METHOD.COD && (
+                  {order.status === ORDER_STATUS.NEW && order.payment_method != PAYMENT_METHOD.COD && (
                     <Button colorScheme={'cyan'} color={'white'} onClick={paymentVNPay}>
                       Thanh toán
                     </Button>

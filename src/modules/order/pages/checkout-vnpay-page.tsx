@@ -3,6 +3,7 @@ import queryString from 'query-string'
 import { useEffect, useState } from 'react'
 import { BsCheckCircle, BsFillExclamationTriangleFill } from 'react-icons/bs'
 import { useLocation, useNavigate, useParams } from 'react-router'
+import { useCustomToast } from '~/hooks'
 import { DefaultLayout } from '~/layouts'
 import axiosClient from '~/libs/axios/axiosClient'
 import { navigationFn } from '~/routes'
@@ -11,9 +12,9 @@ export const CheckoutVNPayPage = () => {
   const location = useLocation()
   const queryParams = queryString.parse(location.search)
   const navigate = useNavigate()
-
+  const { toastSuccess, toastError } = useCustomToast()
   const [success, setSuccess] = useState(false)
-  const [message, setMessage] = useState('')
+  const [response, setResponse] = useState<any>({})
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -23,12 +24,26 @@ export const CheckoutVNPayPage = () => {
       })
       .then((res: any) => {
         setSuccess(res.success)
-        setMessage(res.message)
-        setIsLoading(false)
+
       })
       .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
+  useEffect(() => {
+    axiosClient
+      .get('/order/checkout/ipn_vn_pay', {
+        params: queryParams
+      })
+      .then((res: any) => {
         setIsLoading(false)
-        setMessage(err.response.data.message)
+        setResponse(res)
+        toastSuccess(res.message)
+      })
+      .catch((err) => {
+        toastError(err.response.data.message)
+        setIsLoading(false)
       })
   }, [])
 
@@ -53,19 +68,31 @@ export const CheckoutVNPayPage = () => {
               <Box textAlign={'center'}>
                 <Icon as={BsCheckCircle} boxSize={'14'} color={'green.300'} />
               </Box>
-              <Text textAlign={'center'} pt={'5'}>
+              <Text textAlign={'center'}  pt={'5'}>
                 {' '}
                 Đơn hàng của bạn đã thanh toán thành công ️🎉
               </Text>
+              {queryParams.vnp_TxnRef && (
+                <Text textAlign={'center'}>
+                  {' '}
+                  Mã đơn hàng của bạn là: <b>{queryParams.vnp_TxnRef}</b>
+                </Text>
+              )}
             </>
           ) : (
             <>
               <Box textAlign={'center'}>
                 <Icon as={BsFillExclamationTriangleFill} boxSize={'14'} color={'red.600'} />
               </Box>
-              <Text textAlign={'center'} pt={'5'}>
-                {message}
+              <Text textAlign={'center'}  pt={'5'}>
+                Do lỗi hệ thống, đơn hàng của bạn chưa được thanh toán. Vui lòng thử lại sau
               </Text>
+              {queryParams.vnp_TxnRef && (
+                <Text textAlign={'center'}>
+                  {' '}
+                  Mã đơn hàng của bạn là: <b>{queryParams.vnp_TxnRef}</b>
+                </Text>
+              )}
             </>
           )}
         </>

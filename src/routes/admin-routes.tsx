@@ -1,27 +1,49 @@
 import { RouteObject } from "react-router";
 import { Navigate } from "react-router-dom";
 
-// import { BlankPage } from "@/modules";
-// import { DefaultLayout } from "@/layouts";
-
 import { RequiredAuth } from "./required-auth";
 import { navigationFn } from "./navigation-fn";
-import { DefaultLayout } from "~/layouts";
 import { BlankPage } from "~/modules";
-import { homeRoutes } from "./home-routes";
+import { DashboardPage } from "~/modules/admin/pages/dashboard-page";
+import { BrandPage } from "~/modules/admin/pages/brand/brand-page";
+import { BrandNewPage } from "~/modules/admin/pages/brand/brand-new-page";
+import { BrandEditPage } from "~/modules/admin/pages/brand/brand-edit-page";
+import { ProductNewPage } from "~/modules/admin/pages/product/product-new-page";
 
 export const adminRoutes: RouteObject = {
-  element: <RequiredAuth />,
+  // element: <RequiredAuth />,
   errorElement: <BlankPage />,
   children: [
     {
-      element: <DefaultLayout />,
       children: [
         {
-          index: true,
-          element: <Navigate to={navigationFn.HOME} replace />
+          path: navigationFn.ADMIN_DASHBOARD,
+          element: <DashboardPage />
         },
-        { ...homeRoutes }
+        {
+          path: navigationFn.ADMIN_BRAND,
+          element: <BrandPage />
+        },
+        {
+          path: navigationFn.ADMIN_ADD_BRAND,
+          element: <BrandNewPage />
+        },
+        {
+          path: navigationFn.ADMIN_EDIT_BRAND,
+          element: <BrandEditPage />
+        },
+        {
+          path: navigationFn.ADMIN_PRODUCT,
+          element: <BrandEditPage />
+        },
+        {
+          path: navigationFn.ADMIN_ADD_PRODUCT,
+          element: <ProductNewPage />
+        },
+        {
+          path: navigationFn.ADMIN_EDIT_PRODUCT,
+          element: <BrandEditPage />
+        },
       ]
     }
   ]

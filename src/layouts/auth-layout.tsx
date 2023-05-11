@@ -12,7 +12,7 @@ export const AuthLayout = () => {
 
   return (
     <HStack w='100%' h='100vh' bg='primary'>
-      <Box w='50%' h='100%' bgImage={`url(${Images.authBg})`} bgPos='center' bgRepeat='no-repeat' bgSize='cover'></Box>
+      {/* <Box w='50%' h='100%' bgImage={`url(${Images.authBg})`} bgPos='center' bgRepeat='no-repeat' bgSize='cover'></Box> */}
       <VStack w='50%' p={8} borderRadius='8px'>
         <Icon as={Icons.logo} />
         <Icon as={Icons.textSecondaryLogo} />

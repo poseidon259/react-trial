@@ -16,8 +16,8 @@ export const PAYMENT_METHOD = {
 }
 
 export const ORDER_STATUS = {
-  PENDING: 1,
-  CONFIRMED: 2,
+  NEW: 1,
+  PAID: 2,
   SHIPPING: 3,
   DELIVERED: 4,
   CANCELLED: 5

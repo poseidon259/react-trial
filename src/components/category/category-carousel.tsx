@@ -47,7 +47,7 @@ export const CategoryCarousel = (props: any) => {
               {element.name}
             </Text>
             <Flex justifyContent='center' alignItems='center' height='100%'>
-              <Image src={element.image} objectFit='cover' w='150px' h='150px' />
+              <Image src={element.image} objectFit='contain' w='150px' h='150px' />
             </Flex>
           </Box>
         ))}
