@@ -27,16 +27,17 @@ import { CustomSideBar } from './custom-sidebar'
 import { useCustomToast } from '~/hooks'
 import { useNavigate } from 'react-router'
 import { navigationFn } from '~/routes'
+import { isObjectEmpty } from '~/helper/isObjectEmpty'
+import { SYSTEM_ADMIN } from '~/configs'
 
 export const SideBar = ({ children }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const isLogin = localStorage.getItem('user')
+  const admin = JSON.parse(localStorage.getItem('user') || '{}')
   const { toastSuccess, toastError } = useCustomToast()
   const navigate = useNavigate()
 
-
   const handleLogout = () => {
-    if (isLogin) {
+    if (!isObjectEmpty(admin) && admin.role === SYSTEM_ADMIN) {
       localStorage.removeItem('user')
       toastSuccess('Đăng xuất thành công')
       navigate(navigationFn.ADMIN_LOGIN)

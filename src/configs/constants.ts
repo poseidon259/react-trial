@@ -16,6 +16,29 @@ export const PAYMENT_METHOD = {
   VNPAY: '3'
 }
 
+export const ORDER_STATUS_OBJECT = [
+  {
+    id: 1,
+    name: 'Đang chờ thanh toán'
+  },
+  {
+    id: 2,
+    name: 'Đã xác nhận'
+  },
+  {
+    id: 3,
+    name: 'Đang giao hàng'
+  },
+  {
+    id: 4,
+    name: 'Đã giao hàng'
+  },
+  {
+    id: 5,
+    name: 'Đã hủy'
+  }
+]
+
 export const ORDER_STATUS = {
   NEW: 1,
   PAID: 2,

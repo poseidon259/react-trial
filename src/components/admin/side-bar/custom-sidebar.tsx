@@ -92,7 +92,8 @@ const sidebarData: SidebarCategory[] = [
       },
       {
         id: 10,
-        title: 'Quản lý'
+        title: 'Quản lý',
+        to: navigationFn.ADMIN_ORDER
       }
     ]
   }

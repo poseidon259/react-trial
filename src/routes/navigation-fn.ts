@@ -32,6 +32,10 @@ export const navigationFn = {
   ADMIN_ADD_USER: '/admin/user/new',
   ADMIN_EDIT_USER: '/admin/user/:id/edit',
 
+  ADMIN_ORDER: '/admin/order',
+  ADMIN_ORDER_DETAIL: '/admin/order/:id',
+  ADMIN_ORDER_EDIT: '/admin/order/:id/edit',
+
   HOME_INFORMATION: '/home',
   CHANGE_PASSWORD: '/admin/change-password',
 

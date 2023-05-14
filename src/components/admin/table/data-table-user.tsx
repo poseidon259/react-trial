@@ -1,4 +1,23 @@
-import { Badge, Box, Button, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Table, Tbody, Td, Thead, Tr, VStack, useDisclosure } from '@chakra-ui/react'
+import {
+  Badge,
+  Box,
+  Button,
+  Image,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Table,
+  Tbody,
+  Td,
+  Thead,
+  Tr,
+  VStack,
+  useDisclosure
+} from '@chakra-ui/react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Images } from '~/assets'
@@ -7,6 +26,7 @@ import { fullName } from '~/helper/fullname'
 import { useMutationDeleteUser } from '~/modules/admin/api/delete-user.api'
 
 export const DataTableUser = (props: any) => {
+  const { data } = props
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [id, setId] = useState<string>('')
   const navigate = useNavigate()
@@ -35,7 +55,6 @@ export const DataTableUser = (props: any) => {
     onClose()
   }
 
-  const { data } = props
   return (
     <Box maxW={'95%'} mx={'auto'}>
       <VStack align='stretch' backgroundColor={'white'}>

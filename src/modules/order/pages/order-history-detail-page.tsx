@@ -104,6 +104,13 @@ export const OrderHistoryDetailPage = () => {
                   })}`}</Text>
                 </Text>
                 <Text>
+                  Phí ship:{' '}
+                  <Text as={'span'} fontWeight={'normal'} fontSize={'xl'}>{`${formatPrice(order.delivery_fee, {
+                    locale: 'VN',
+                    currency: 'VND'
+                  })}`}</Text>
+                </Text>
+                <Text>
                   Tổng tiền:{' '}
                   <Text as={'span'} fontWeight={'normal'} fontSize={'xl'}>{`${formatPrice(order.total, {
                     locale: 'VN',
@@ -114,6 +121,11 @@ export const OrderHistoryDetailPage = () => {
                 <Text>
                   Trạng thái đơn hàng:
                   <OrderStatusBadge status={order.status} />
+                </Text>
+
+                <Text>
+                  Trạng thái thanh toán:
+                  <Text as={'span'} fontWeight={'normal'} pl={'10px'} color={order.payment_date ? 'teal.300' : 'facebook.300'} >{order.payment_date ? 'Đã thanh toán' : 'Chưa thanh toán'}</Text>
                 </Text>
 
                 <Box>

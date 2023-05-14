@@ -22,9 +22,8 @@ export const useMutationLogin = () => {
     mutationFn: loginFn,
     mutationKey: 'login',
     onSuccess: (data) => {
-      setStorage('role', data?.data?.role)
+      console.log(data)
       setStorage('user', data?.data)
-
       if (data?.data?.role === SYSTEM_ADMIN) {
         navigate(navigationFn.ADMIN_DASHBOARD)
       } else if (data?.data?.role === SYSTEM_USER) {

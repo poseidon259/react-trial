@@ -22,6 +22,7 @@ import { Logo } from '~/components/login/logo'
 import { LOGIN_EMAIL, SYSTEM_ADMIN } from '~/configs'
 import { navigationFn } from '~/routes'
 import { useCustomToast } from '~/hooks'
+import { isObjectEmpty } from '~/helper/isObjectEmpty'
 
 type TLogin = {
   email: string
@@ -32,13 +33,11 @@ type TLogin = {
 
 export const LoginPageAdmin = () => {
   const navigate = useNavigate()
+  const admin = JSON.parse(localStorage.getItem('user') || '{}')
   const { toastSuccess, toastError } = useCustomToast()
 
   useEffect(() => {
-    const isLogin = localStorage.getItem('user')
-    const role = Number(localStorage.getItem('role')) ?? 0
-
-    if (isLogin && role == SYSTEM_ADMIN) {
+    if (!isObjectEmpty(admin) && admin.role === SYSTEM_ADMIN) {
       toastError('Bạn đã đăng nhập')
       navigate(navigationFn.ADMIN_DASHBOARD)
     }

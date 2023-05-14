@@ -61,10 +61,6 @@ export const CheckoutPage = ({ variant }: { variant: 'circles' | 'circles-alt' |
       })
   }, [])
 
-  const handleToHome = () => {
-    navigate(navigationFn.HOME)
-  }
-
   const subTotal = (items: any) => {
     return items.cart_items?.reduce((acc: any, item: any) => {
       return acc + item.quantity * getPrice(item.sale_price, item.origin_price)
@@ -112,7 +108,6 @@ export const CheckoutPage = ({ variant }: { variant: 'circles' | 'circles-alt' |
                   nextStep={nextStep}
                   prevStep={prevStep}
                   isLastStep={isLastStep}
-                  handleToHome={handleToHome}
                 />
               )}
             </Step>

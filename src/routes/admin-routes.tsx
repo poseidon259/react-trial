@@ -12,6 +12,9 @@ import { ProductEditPage } from "~/modules/admin/pages/product/product-edit-page
 import { UserPage } from "~/modules/admin/pages/user/user-page";
 import { UserNewPage } from "~/modules/admin/pages/user/user-new-page";
 import { UserEditPage } from "~/modules/admin/pages/user/user-edit-page";
+import { OrderPage } from "~/modules/admin/pages/order/order-page";
+import { OrderEditPage } from "~/modules/admin/pages/order/order-edit-page";
+import { OrderViewPage } from "~/modules/admin/pages/order/oder-view-page";
 
 export const adminRoutes: RouteObject = {
   element: <RequiredAuth />,
@@ -58,6 +61,18 @@ export const adminRoutes: RouteObject = {
         {
           path: navigationFn.ADMIN_EDIT_USER,
           element: <UserEditPage />
+        },
+        {
+          path: navigationFn.ADMIN_ORDER,
+          element: <OrderPage />
+        },
+        {
+          path: navigationFn.ADMIN_ORDER_EDIT,
+          element: <OrderEditPage />
+        },
+        {
+          path: navigationFn.ADMIN_ORDER_DETAIL,
+          element: <OrderViewPage />
         },
       ]
     }

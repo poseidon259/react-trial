@@ -1,28 +1,28 @@
-import { Box, Flex, Heading, Skeleton, Stack, useColorModeValue } from '@chakra-ui/react'
-import { AdminLayout } from '~/layouts/admin-layout'
-import { UserEditForm } from '../../forms/user/user-edit-form'
-import { useNavigate, useParams } from 'react-router'
-import { useState, useEffect } from 'react'
-import { useCustomToast } from '~/hooks'
-import axiosClient from '~/libs/axios/axiosClient'
+import { Box, Flex, Heading, Skeleton, Stack, useColorModeValue } from "@chakra-ui/react"
+import { useNavigate, useParams } from "react-router"
+import { useCustomToast } from "~/hooks"
+import { AdminLayout } from "~/layouts/admin-layout"
+import { OrderEditForm } from "../../forms/order/order-edit-form"
+import { useEffect, useState } from 'react'
+import axiosClient from "~/libs/axios/axiosClient"
 
-export const UserEditPage = () => {
+export const OrderEditPage = () => {
   const { id } = useParams()
-  const [user, setUser] = useState<any>({})
+  const [order, setOrder] = useState<any>({})
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const { toastSuccess, toastError } = useCustomToast()
   const navigate = useNavigate()
 
   useEffect(() => {
     axiosClient
-      .get(`/user/show/${id}`)
+      .get(`order/show/${id}`)
       .then((res) => {
-        setUser(res.data)
+        setOrder(res.data)
         setIsLoading(false)
       })
       .catch((error) => {
         toastError(error.response.data.message)
-        navigate('/admin/user')
+        navigate('/admin/order')
       })
   }, [])
 
@@ -32,7 +32,7 @@ export const UserEditPage = () => {
         <Stack spacing={8} py={12} px={6}>
           <Stack align={'center'}>
             <Heading fontSize={'2xl'} textAlign={'center'}>
-              Sửa thông tin người dùng
+              Sửa đơn hàng
             </Heading>
           </Stack>
           {isLoading ? (
@@ -40,7 +40,7 @@ export const UserEditPage = () => {
               <Skeleton height={'400px'} width='100%' />
             </Flex>
           ) : (
-            <UserEditForm data={user} />
+            <OrderEditForm data={order} />
           )}
         </Stack>
       </Box>

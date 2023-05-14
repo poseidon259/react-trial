@@ -33,11 +33,13 @@ import axiosClient from '~/libs/axios/axiosClient'
 import { BsFillBagHeartFill, BsFillCartFill } from 'react-icons/bs'
 import { AiOutlineLogout } from 'react-icons/ai'
 import { MdOutlineHistory, MdOutlineSearch, MdPublishedWithChanges, MdTipsAndUpdates } from 'react-icons/md'
-import { PhoneIcon } from '@chakra-ui/icons'
+import { SYSTEM_USER } from '~/configs'
+import { isObjectEmpty } from '~/helper/isObjectEmpty'
 
 export const Nav = () => {
   const isDesktop = useBreakpointValue({ base: false, lg: true })
-  const isLogin = localStorage.getItem('user')
+  const userLogin = JSON.parse(localStorage.getItem('user') || '{}')
+  const isLogin = !isObjectEmpty(userLogin) && userLogin.role === SYSTEM_USER
   const navigate = useNavigate()
   const { toastSuccess, toastError } = useCustomToast()
   const [user, setUser] = useState<any>(null)

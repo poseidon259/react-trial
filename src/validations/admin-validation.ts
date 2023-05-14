@@ -273,3 +273,15 @@ export const AddUserFormSchema = z
     message: 'Mật khẩu không khớp',
     path: ['confirm_password']
   })
+
+export const UpdateOrderStatusFormSchema = z.object({
+  status: z
+    .string({
+      required_error: 'Status is required',
+      invalid_type_error: 'Invalid status'
+    })
+    .trim()
+    .min(1, {
+      message: 'Trạng thái sản phẩm là bắt buộc'
+    })
+})

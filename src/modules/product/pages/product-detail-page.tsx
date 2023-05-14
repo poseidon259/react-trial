@@ -7,9 +7,10 @@ import { ProductDetail } from '~/components/product-detail/product-detail'
 import { DefaultLayout } from '~/layouts'
 import axiosClient from '~/libs/axios/axiosClient'
 import { CommentPublicForm } from '../form/create-comment-product'
-import { LIMIT_PER_PAGE_COMMENT } from '~/configs'
+import { LIMIT_PER_PAGE_COMMENT, SYSTEM_USER } from '~/configs'
 import { useCustomToast } from '~/hooks'
 import { navigationFn } from '~/routes'
+import { isObjectEmpty } from '~/helper/isObjectEmpty'
 
 export const ProductDetailPage = () => {
   const { id } = useParams()
@@ -20,7 +21,8 @@ export const ProductDetailPage = () => {
   const [limit, setLimit] = useState(LIMIT_PER_PAGE_COMMENT)
   const [currentPage, setCurrentPage] = useState(1)
   const [lastPage, setLastPage] = useState(1)
-  const isLogin = localStorage.getItem('user') ?? false
+  const userLogin = JSON.parse(localStorage.getItem('user') || '{}')
+  const isLogin = !isObjectEmpty(userLogin) && userLogin.role === SYSTEM_USER
   const [quantity, setQuantity] = useState(1)
   const [masterField, setMasterField] = useState('')
   const { toastSuccess, toastError } = useCustomToast()

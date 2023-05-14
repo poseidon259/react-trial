@@ -17,13 +17,13 @@ export const ConfirmPayment = (props: any) => {
   const [ward, setWard] = useState({} as any)
 
   useEffect(() => {
-    axiosClient.get(`public/address/province/${confirmData.province}`).then((res: any) => {
+    axiosClient.get(`public/address/province/${confirmData.province_id}`).then((res: any) => {
       setProvince(res)
     })
-    axiosClient.get(`public/address/district/${confirmData.district}`).then((res: any) => {
+    axiosClient.get(`public/address/district/${confirmData.district_id}`).then((res: any) => {
       setDistrict(res)
     })
-    axiosClient.get(`public/address/ward/${confirmData.ward}`).then((res: any) => {
+    axiosClient.get(`public/address/ward/${confirmData.ward_id}`).then((res: any) => {
       setWard(res)
     })
   }, [])
@@ -57,7 +57,7 @@ export const ConfirmPayment = (props: any) => {
               <Text
                 as={'span'}
                 fontWeight={'normal'}
-              >{`${province?.name}, ${district?.name}, ${ward?.name}, ${confirmData.house_number}`}</Text>
+              >{`${province.name ?? ''}, ${district.name ?? ''}, ${ward.name ?? ''}, ${confirmData.house_number}`}</Text>
             </Text>
             <Text>
               Số điện thoại:{' '}
