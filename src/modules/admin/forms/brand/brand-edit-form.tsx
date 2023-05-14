@@ -3,9 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import { ImageUpload } from '~/components/admin/upload/image-upload'
 import { AddBrandFormSchema } from '~/validations/admin-validation'
-import { useMutationAddBrand } from '../../api/add-brand.api'
 import { useEffect, useState } from 'react'
-import axiosClient from '~/libs/axios/axiosClient'
 import { useMutationEditBrand } from '../../api/edit-brand.api'
 
 type TBrand = {
@@ -35,7 +33,7 @@ export const BrandEditForm = (props: any) => {
 
   const initialValues = {
     name: data.name,
-    image: new File([], '')
+    image: new File([], '') 
   }
 
   const {
@@ -72,10 +70,22 @@ export const BrandEditForm = (props: any) => {
             <Box w='50%'>
               <FormControl id='image' isRequired>
                 <FormLabel htmlFor='image'>Ảnh</FormLabel>
-                <ImageUpload data={data} onChange={(file: File) => {
-                  field.onChange(file)
-                  setFile(file)
-                }} />
+                <ImageUpload
+                  displayButton={1}
+                  multiple={false}
+                  data={[
+                    {
+                      uid: data.id,
+                      url: data.image,
+                      status: 'done',
+                      originFileObj: file
+                    }
+                  ]}
+                  onChange={(file: File) => {
+                    field.onChange(file)
+                    setFile(file)
+                  }}
+                />
               </FormControl>
               {errors.image && <Text variant='error'>{errors.image.message}</Text>}
             </Box>

@@ -12,6 +12,8 @@ export const LoginPage = () => {
     if (isLogin) {
       navigate(navigationFn.HOME)
     }
-  }, [navigate])
+  }, [])
+
+  
   return <LoginForm />
 }

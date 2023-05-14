@@ -1,8 +1,11 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm, Controller } from 'react-hook-form'
+import { AddProductFormSchema } from '~/validations/admin-validation'
+import { useMutationEditProduct } from '../../api/edit-product.api'
 import {
   Box,
   Button,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   HStack,
   Input,
@@ -14,15 +17,11 @@ import {
   Textarea,
   useColorModeValue
 } from '@chakra-ui/react'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Controller, useForm } from 'react-hook-form'
-import { ImageUpload } from '~/components/admin/upload/image-upload'
-import { AddProductFormSchema } from '~/validations/admin-validation'
-import { useMutationAddProduct } from '../../api/add-product.api'
 import { useEffect, useState } from 'react'
 import axiosClient from '~/libs/axios/axiosClient'
-import { PRODUCT_STATUS } from '~/configs'
 import { useCustomToast } from '~/hooks'
+import { PRODUCT_STATUS } from '~/configs'
+import { ImageUpload } from '~/components/admin/upload/image-upload'
 
 type TMasterField = {
   name: string
@@ -45,14 +44,44 @@ type TProduct = {
   master_fields: TMasterField[]
 }
 
-export const ProductNewForm = () => {
+export const ProductEditForm = (props: any) => {
   const [categories, setCategories] = useState([])
   const [masterFields, setMasterFields] = useState<any>([])
+  const [files, setFiles] = useState<File[]>([])
+  const [oldImages, setOldImages] = useState<any>([])
+  const { data } = props
   const { toastSuccess, toastError } = useCustomToast()
 
-  const createInput = () => {
-    setMasterFields([...masterFields, { name: '', sale_price: '', origin_price: '', stock: 0 }])
-  }
+  useEffect(() => {
+    const getFilesFromUrls = async () => {
+      try {
+        const images = await Promise.all(
+          data.product_images.map(async (image: any) => {
+            const response = await fetch(image.image)
+            const blob = await response.blob()
+            const filename = `old-image-${image.id}.png` // Replace with the desired filename
+
+            const result = new File([blob], filename, { type: blob.type })
+
+            oldImages.push({
+              uid: image.id,
+              url: image.image,
+              status: 'done',
+              originFileObj: result
+            })
+
+            return result
+          })
+        )
+
+        setFiles(images)
+      } catch (error) {
+        console.error('Error fetching files:', error)
+      }
+    }
+
+    getFilesFromUrls()
+  }, [])
 
   const handleInputChange = (index: any, property: any, value: any) => {
     const newMasterFields = [...masterFields]
@@ -60,10 +89,28 @@ export const ProductNewForm = () => {
     setMasterFields(newMasterFields)
   }
 
+  const createInput = () => {
+    setMasterFields([...masterFields, { name: '', sale_price: '', origin_price: '', stock: 0 }])
+  }
+
   const deleteInput = (index: number) => {
     const newMasterFields = [...masterFields]
     newMasterFields.splice(index, 1)
     setMasterFields(newMasterFields)
+  }
+
+  const initialValues = {
+    name: data.name,
+    category_id: data.category_id.toString(),
+    description_list: data.description_list ?? '',
+    description_detail: data.description_detail,
+    stock: data.stock,
+    sale_price: data.sale_price ? data.sale_price.toString() : '',
+    origin_price: data.origin_price.toString(),
+    product_code: data.product_code ? data.product_code.toString() : '',
+    status: data.status.toString(),
+    images: [],
+    master_fields: data.master_fields && data.master_fields.length > 0 ? data.master_fields[0].childs : []
   }
 
   useEffect(() => {
@@ -77,19 +124,15 @@ export const ProductNewForm = () => {
       })
   }, [])
 
-  const initialValues = {
-    name: '',
-    category_id: '',
-    description_list: '',
-    description_detail: '',
-    stock: 0,
-    sale_price: '',
-    origin_price: '',
-    product_code: '',
-    status: '',
-    images: [],
-    master_fields: []
-  }
+  useEffect(() => {
+    const updatedMasterFields =
+      data.master_fields[0]?.childs.map((child: any) => ({
+        ...child,
+        sale_price: child.sale_price ? parseInt(child.sale_price) : '',
+        origin_price: parseInt(child.origin_price)
+      })) ?? []
+    setMasterFields(updatedMasterFields)
+  }, [])
 
   const {
     handleSubmit,
@@ -100,10 +143,11 @@ export const ProductNewForm = () => {
     resolver: zodResolver(AddProductFormSchema)
   })
 
-  const { mutate, isLoading } = useMutationAddProduct()
+  const { mutate, isLoading } = useMutationEditProduct()
 
   const onSubmit = (data: TProduct) => {
     data.master_fields = masterFields
+    data.images = files
     mutate(data)
   }
 
@@ -295,7 +339,15 @@ export const ProductNewForm = () => {
               <Box w='100%'>
                 <FormControl id='images' isRequired>
                   <FormLabel htmlFor='images'>Ảnh</FormLabel>
-                  <ImageUpload displayButton={5} multiple={true} onChange={(file: File) => field.onChange(file)} />
+                  <ImageUpload
+                    displayButton={5}
+                    data={oldImages}
+                    multiple={true}
+                    onChange={(files: File[]) => {
+                      field.onChange(files)
+                      setFiles(files)
+                    }}
+                  />
                 </FormControl>
                 {errors.images && <Text variant='error'>{errors.images.message}</Text>}
               </Box>
@@ -341,6 +393,7 @@ export const ProductNewForm = () => {
                 />
                 {parseInt(field.stock) <= 0 && <Text variant='error'>Tồn kho phải lớn hơn 0</Text>}
               </FormControl>
+
               <FormControl>
                 <FormLabel>Action</FormLabel>
                 <Button colorScheme='red' onClick={() => deleteInput(index)}>
@@ -356,7 +409,7 @@ export const ProductNewForm = () => {
         </Button>
 
         <Button type='submit' backgroundColor={'blue.500'} color={'white'} w={'120px'} isLoading={isLoading}>
-          Tạo mới
+          Sửa
         </Button>
       </Stack>
     </Box>

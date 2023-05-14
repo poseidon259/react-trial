@@ -7,7 +7,7 @@ export const ProductImageSlider = (props: any) => {
   const { images } = props
   const styles = `
   .slick-thumb li {
-    margin-top: 10px; /* add margin between dots and slider */
+    margin-top: 10px; 
     width: 100px;
   }
 `

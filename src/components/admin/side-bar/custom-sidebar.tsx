@@ -71,11 +71,13 @@ const sidebarData: SidebarCategory[] = [
     subcategories: [
       {
         id: 7,
-        title: 'Thêm mới'
+        title: 'Thêm mới',
+        to: navigationFn.ADMIN_ADD_USER
       },
       {
         id: 8,
-        title: 'Quản lý'
+        title: 'Quản lý',
+        to: navigationFn.ADMIN_USER
       }
     ]
   },

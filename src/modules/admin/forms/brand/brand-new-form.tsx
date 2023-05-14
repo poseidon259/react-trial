@@ -13,7 +13,7 @@ type TBrand = {
 export const BrandNewForm = () => {
   const initialValues = {
     name: '',
-    image: new File([], '')
+    image: new File([], 'default_2509')
   }
 
   const {
@@ -49,7 +49,7 @@ export const BrandNewForm = () => {
             <Box w='50%'>
               <FormControl id='image' isRequired>
                 <FormLabel htmlFor='image'>Ảnh</FormLabel>
-                <ImageUpload onChange={(file: File) => field.onChange(file)} />
+                <ImageUpload displayButton={1} multiple={false} onChange={(file: File) => field.onChange(file)} />
               </FormControl>
               {errors.image && <Text variant='error'>{errors.image.message}</Text>}
             </Box>

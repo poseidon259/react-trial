@@ -24,9 +24,26 @@ import { MdPublishedWithChanges, MdTipsAndUpdates } from 'react-icons/md'
 import { AiOutlineLogout } from 'react-icons/ai'
 import { SearchBar } from './SearchBar'
 import { CustomSideBar } from './custom-sidebar'
+import { useCustomToast } from '~/hooks'
+import { useNavigate } from 'react-router'
+import { navigationFn } from '~/routes'
 
 export const SideBar = ({ children }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const isLogin = localStorage.getItem('user')
+  const { toastSuccess, toastError } = useCustomToast()
+  const navigate = useNavigate()
+
+
+  const handleLogout = () => {
+    if (isLogin) {
+      localStorage.removeItem('user')
+      toastSuccess('Đăng xuất thành công')
+      navigate(navigationFn.ADMIN_LOGIN)
+    } else {
+      toastError('Bạn chưa đăng nhập')
+    }
+  }
 
   return (
     <Box minH='100vh' bg={useColorModeValue('gray.100', 'gray.900')}>
@@ -74,7 +91,7 @@ export const SideBar = ({ children }: any) => {
                     <Flex alignItems='center'>
                       <Avatar size='sm' name='' src='none' />
                       <Text as='span' px='2'>
-                        Name
+                        Quản trị
                         <Icon as={FiChevronDown} />
                       </Text>
                     </Flex>
@@ -84,7 +101,9 @@ export const SideBar = ({ children }: any) => {
               <MenuList>
                 <MenuItem icon={<Icon as={MdTipsAndUpdates} />}>Cập nhập thông tin</MenuItem>
                 <MenuItem icon={<Icon as={MdPublishedWithChanges} />}>Đổi mật khẩu</MenuItem>
-                <MenuItem icon={<Icon as={AiOutlineLogout} />}>Đăng xuất</MenuItem>
+                <MenuItem icon={<Icon as={AiOutlineLogout} />} onClick={handleLogout}>
+                  Đăng xuất
+                </MenuItem>
               </MenuList>
             </Menu>
           </Flex>
@@ -97,6 +116,12 @@ export const SideBar = ({ children }: any) => {
 
 const SidebarContent = (props: any) => {
   const { onClose, ...rest } = props
+  const navigate = useNavigate()
+
+  const handleToHome = () => {
+    navigate(navigationFn.ADMIN_DASHBOARD)
+  }
+
   return (
     <Box
       transition='3s ease'
@@ -109,7 +134,7 @@ const SidebarContent = (props: any) => {
       {...rest}
     >
       <Flex h='20' alignItems='center' mx='8' justifyContent='space-between'>
-        <HStack alignItems='center' cursor='pointer'>
+        <HStack alignItems='center' cursor='pointer' onClick={handleToHome}>
           <Logo />
           <Text fontWeight='regular' fontSize='xl' textTransform='uppercase'>
             Trial

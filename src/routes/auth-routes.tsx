@@ -2,8 +2,8 @@ import { RouteObject } from 'react-router'
 
 import { BlockedAuth } from './blocked-auth'
 import { BlankPage, ForgotPasswordPage, LoginPage, ResetPasswordPage } from '~/modules'
-import { AuthLayout } from '~/layouts'
 import RegisterForm from '~/modules/auth/forms/register-form'
+import { LoginPageAdmin } from '~/modules/admin/pages/login-admin-page'
 
 export const authRoutes: RouteObject = {
   element: <BlockedAuth />,
@@ -31,6 +31,10 @@ export const authRoutes: RouteObject = {
         {
           path: '/reset-password',
           element: <ResetPasswordPage />
+        },
+        {
+          path: '/admin/login',
+          element: <LoginPageAdmin />
         }
       ]
     }

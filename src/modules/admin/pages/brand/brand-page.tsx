@@ -12,15 +12,10 @@ export const BrandPage = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [lastPage, setLastPage] = useState(1)
   const limitPerPage = 5
-  const [deletedBrandId, setDeletedBrandId] = useState<string>('')
   const { toastSuccess, toastError } = useCustomToast()
 
   const onPageChange = (page: number) => {
     setCurrentPage(page)
-  }
-
-  const handleDeleteBrand = (id: string) => {
-    setDeletedBrandId(id)
   }
 
   localStorage.setItem('selectedParent', '2')

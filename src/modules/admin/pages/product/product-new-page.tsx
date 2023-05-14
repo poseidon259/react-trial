@@ -1,6 +1,6 @@
 import { Box, Heading, Stack, useColorModeValue } from '@chakra-ui/react'
 import { AdminLayout } from '~/layouts/admin-layout'
-import { BrandNewForm } from '../../forms/brand/brand-new-form'
+import { ProductNewForm } from '../../forms/product/product-new-form'
 
 export const ProductNewPage = () => {
 
@@ -16,7 +16,7 @@ export const ProductNewPage = () => {
               Thêm mới sản phẩm
             </Heading>
           </Stack>
-          <BrandNewForm />
+          <ProductNewForm />
         </Stack>
       </Box>
     </AdminLayout>

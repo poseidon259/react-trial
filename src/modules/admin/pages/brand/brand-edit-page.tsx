@@ -3,12 +3,15 @@ import { AdminLayout } from '~/layouts/admin-layout'
 import { BrandEditForm } from '../../forms/brand/brand-edit-form'
 import { useEffect, useState } from 'react'
 import axiosClient from '~/libs/axios/axiosClient'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useCustomToast } from '~/hooks'
 
 export const BrandEditPage = () => {
   const { id } = useParams()
   const [brand, setBrand] = useState<any>({})
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const { toastSuccess, toastError } = useCustomToast()
+  const navigate = useNavigate()
 
   useEffect(() => {
     axiosClient
@@ -17,7 +20,10 @@ export const BrandEditPage = () => {
         setBrand(res.data)
         setIsLoading(false)
       })
-      .catch((err) => {})
+      .catch((error) => {
+        toastError(error.response.data.message)
+        navigate('/admin/brand')
+      })
   }, [])
 
   return (

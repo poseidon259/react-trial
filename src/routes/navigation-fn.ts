@@ -18,6 +18,7 @@ export const navigationFn = {
   ORDER_HISTORY: '/order-history',
   ORDER_DETAIL: '/order-history/:id',
 
+  ADMIN_LOGIN: '/admin/login',
   ADMIN_DASHBOARD: '/admin/dashboard',
   ADMIN_BRAND: '/admin/brand',
   ADMIN_ADD_BRAND: '/admin/brand/new',
@@ -26,6 +27,10 @@ export const navigationFn = {
   ADMIN_PRODUCT: '/admin/product',
   ADMIN_ADD_PRODUCT: '/admin/product/new',
   ADMIN_EDIT_PRODUCT: '/admin/product/:id/edit',
+
+  ADMIN_USER: '/admin/user',
+  ADMIN_ADD_USER: '/admin/user/new',
+  ADMIN_EDIT_USER: '/admin/user/:id/edit',
 
   HOME_INFORMATION: '/home',
   CHANGE_PASSWORD: '/admin/change-password',

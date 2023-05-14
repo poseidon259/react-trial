@@ -1,11 +1,7 @@
-import React from "react";
-import { Navigate, Outlet } from "react-router";
-
-import { navigationFn } from "./navigation-fn";
-import { getAccessToken } from "~/helper";
+import { Navigate, Outlet } from 'react-router'
+import { navigationFn } from './navigation-fn'
 
 export function RequiredAuth() {
-  const isAuth = getAccessToken();
-
-  return false ? <Outlet /> : <Navigate to={navigationFn.LOGIN} replace />;
+  const isAuth = localStorage.getItem('user') ? true : false
+  return isAuth ? <Outlet /> : <Navigate to={navigationFn.ADMIN_LOGIN} replace />
 }
