@@ -42,6 +42,7 @@ export const useMutationCreateOrder = () => {
     },
 
     onError: (error: any) => {
+      toastError('Đã xảy ra lỗi')
       toastError(error?.response?.data?.message)
     }
   })

@@ -71,7 +71,7 @@ export const CartOrderSummary = (props: any) => {
         rightIcon={<FaArrowRight />}
         onClick={() => handleCheckout(isCheck)}
       >
-        Thanh toán
+        Đặt hàng
       </Button>
     </Stack>
   )

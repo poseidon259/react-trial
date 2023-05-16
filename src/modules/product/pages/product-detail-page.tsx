@@ -29,23 +29,6 @@ export const ProductDetailPage = () => {
   const [createdComment, setCreatedComment] = useState(false)
   const navigate = useNavigate()
 
-  const handleCreateComment = () => {
-    setCreatedComment(!createdComment)
-    axiosClient
-      .get(`client/product/${id}/comments`, {
-        params: {
-          limit: limit,
-          page: currentPage
-        }
-      })
-      .then((res: any) => {
-        setComments(res.comments)
-        setLastPage(res.last_page)
-        setCurrentPage(res.current_page)
-        setIsLoadingComment(false)
-      })
-  }
-
   const handleQuantityCallback = (quantity: number) => {
     setQuantity(quantity)
   }
@@ -141,7 +124,7 @@ export const ProductDetailPage = () => {
             </Box>
           </Box>
         )}
-        {isLogin && <CommentPublicForm callback={handleCreateComment} />}
+        {isLogin && <CommentPublicForm />}
       </DefaultLayout>
     </>
   )

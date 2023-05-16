@@ -87,13 +87,15 @@ export const LoginFormSchema = z.object({
   email: z
     .string({
       required_error: 'Email is required',
-      invalid_type_error: 'Invalid email'
+      invalid_type_error: 'Email không hợp lệ'
     })
     .trim()
     .max(100, {
       message: 'The email field can only enter less than 100 characters'
     })
-    .email(),
+    .email({
+      message: 'Email không hợp lệ'
+    }),
   password: z
     .string({
       required_error: 'Password is required',
@@ -101,10 +103,10 @@ export const LoginFormSchema = z.object({
     })
     .trim()
     .min(8, {
-      message: 'The password field can only enter more than 4 characters'
+      message: 'Mật khẩu phải có ít nhất 8 ký tự'
     })
     .max(32, {
-      message: 'The password field can only enter less than 32 characters'
+      message: 'Mật khẩu phải có ít hơn 32 ký tự'
     })
 })
 
@@ -112,13 +114,15 @@ export const RegisterFormSchema = z.object({
   email: z
     .string({
       required_error: 'Email is required',
-      invalid_type_error: 'Invalid email'
+      invalid_type_error: 'Email không hợp lệ'
     })
     .trim()
     .max(100, {
       message: 'The email field can only enter less than 100 characters'
     })
-    .email(),
+    .email({
+      message: 'Email không hợp lệ'
+    }),
   password: z
     .string({
       required_error: 'Password is required',
@@ -126,10 +130,10 @@ export const RegisterFormSchema = z.object({
     })
     .trim()
     .min(8, {
-      message: 'The password field can only enter more than 8 characters'
+      message: 'Mật khẩu phải có ít nhất 8 ký tự'
     })
     .max(32, {
-      message: 'The password field can only enter less than 32 characters'
+      message: 'Mật khẩu phải có ít hơn 32 ký tự'
     }),
   first_name: z
     .string({

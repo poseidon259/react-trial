@@ -43,6 +43,23 @@ type TUser = {
 
 export const UserEditForm = (props: any) => {
   const { data } = props
+  const [file, setFile] = useState<File>(new File([], ''))
+
+  useEffect(() => {
+    const getFileFromUrl = async () => {
+      try {
+        const response = await fetch(data.avatar) // Replace with your file URL
+        const blob = await response.blob()
+        const filename = 'old-image.png' // Replace with the desired filename
+        const downloadedFile = new File([blob], filename, { type: blob.type })
+        setFile(downloadedFile)
+      } catch (error) {
+        console.error('Error fetching file:', error)
+      }
+    }
+
+    getFileFromUrl()
+  }, [])
 
   const [provinceId, setProvinceId] = useState(0)
   const [districtId, setDistrictId] = useState(0)
@@ -67,17 +84,17 @@ export const UserEditForm = (props: any) => {
   }
 
   const initialValues = {
-    first_name: data.first_name,
-    last_name: data.last_name,
-    province_id: data.province_id,
-    district_id: data.district_id,
-    ward_id: data.ward_id,
-    house_number: data.house_number,
-    phone_number: data.phone_number,
+    first_name: data.first_name ?? '',
+    last_name: data.last_name ?? '',
+    province_id: data.province_id.toString() ?? '',
+    district_id: data.district_id.toString() ?? '',
+    ward_id: data.ward_id.toString() ?? '',
+    house_number: data.house_number ?? '',
+    phone_number: data.phone_number ?? '',
     password: '',
     confirm_password: '',
-    email: data.email,
-    status: data.status,
+    email: data.email ?? '',
+    status: data.status.toString(),
     avatar: new File([], '')
   }
 
@@ -148,6 +165,7 @@ export const UserEditForm = (props: any) => {
   const { mutate, isLoading } = useMutationEditUser()
 
   const onSubmit = (data: TUser) => {
+    data.avatar = file
     mutate(data)
   }
   return (
@@ -378,7 +396,7 @@ export const UserEditForm = (props: any) => {
                     onChange={(e) => {
                       field.onChange(e)
                     }}
-                    value={field.value.toString()}
+                    value={field.value}
                   >
                     <Stack direction='row'>
                       {USER_STATUS.map((option: any) => (
@@ -403,7 +421,22 @@ export const UserEditForm = (props: any) => {
               <Box w='50%'>
                 <FormControl id='avatar' isRequired>
                   <FormLabel htmlFor='avatar'>Ảnh</FormLabel>
-                  <ImageUpload displayButton={1} multiple={false} onChange={(file: File) => field.onChange(file)} />
+                  <ImageUpload
+                    data={[
+                      {
+                        uid: data.id,
+                        url: data.avatar,
+                        status: 'done',
+                        originFileObj: file
+                      }
+                    ]}
+                    displayButton={1}
+                    multiple={false}
+                    onChange={(file: File) => {
+                      field.onChange(file)
+                      setFile(file)
+                    }}
+                  />
                 </FormControl>
                 {errors.avatar && <Text variant='error'>{errors.avatar.message}</Text>}
               </Box>

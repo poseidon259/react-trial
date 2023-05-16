@@ -143,10 +143,10 @@ export const Nav = () => {
                         </Wrap>
                       </MenuButton>
                       <MenuList>
-                        <MenuItem icon={<Icon as={MdTipsAndUpdates} />} onClick={handleLogout}>
+                        <MenuItem icon={<Icon as={MdTipsAndUpdates} />}>
                           Cập nhập thông tin
                         </MenuItem>
-                        <MenuItem icon={<Icon as={MdPublishedWithChanges} />} onClick={handleLogout}>
+                        <MenuItem icon={<Icon as={MdPublishedWithChanges} />} >
                           Đổi mật khẩu
                         </MenuItem>
                         <MenuItem icon={<Icon as={MdOutlineHistory} />} onClick={handleToOrderHistory} >

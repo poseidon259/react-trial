@@ -94,6 +94,9 @@ export const ProductDetail = (props: any) => {
               </HStack>
               <PriceTag salePrice={product.sale_price} price={product.origin_price} currency='VND' />
               <Box fontSize='md' fontWeight={'light'}>
+                <Text as={'span'} fontWeight={'medium'}>Thương hiệu:</Text> {product.category_name}
+              </Box>
+              <Box fontSize='md' fontWeight={'light'}>
                 <Text pt={'10px'}>Mô tả sản phẩm</Text>
                 {product.description_detail}
               </Box>

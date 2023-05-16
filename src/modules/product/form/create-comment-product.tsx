@@ -11,7 +11,7 @@ type TComment = {
 }
 
 export const CommentPublicForm = (props: any) => {
-  const { callback } = props
+
   const initialValues = {
     rating: 0,
     content: ''
@@ -30,7 +30,6 @@ export const CommentPublicForm = (props: any) => {
 
   const onSubmit = (data: TComment) => {
     mutate(data)
-    callback()
   }
 
   return (
