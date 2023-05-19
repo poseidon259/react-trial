@@ -24,6 +24,7 @@ import { useCustomToast } from '~/hooks'
 import { RxDot } from 'react-icons/rx'
 import { OrderStatusBadge } from '~/components/order/order-status-badge'
 import { getPaymentMethod } from '~/helper/getPaymentMethod'
+import { OrderItem } from '~/modules/order/components/order-item'
 
 
 export const OrderViewForm = (props: any) => {
@@ -251,6 +252,21 @@ export const OrderViewForm = (props: any) => {
             {data.payment_date ? 'Đã thanh toán' : 'Chưa thanh toán'}
           </Text>
         </Text>
+
+        <HStack>
+          <Box w={'100%'}>Ảnh sản phẩm</Box>
+          <Box w={'100%'}>Mô tả</Box>
+          <Box w={'100%'}>Giá mua</Box>
+          <Box w={'100%'}>Số lượng</Box>
+          <Box w={'100%'}>Tổng tiền</Box>
+        </HStack>
+
+        {data.order_items.map((item: any) => (
+          <Box key={item.id} py={'5px'}>
+            <OrderItem data={item} />
+          </Box>
+        ))}
+
       </Stack>
     </Box>
   )

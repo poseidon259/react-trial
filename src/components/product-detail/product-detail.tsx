@@ -74,6 +74,8 @@ export const ProductDetail = (props: any) => {
     mutate(data)
   }
 
+  console.log(product)
+
   return (
     <Box as={'form'} onSubmit={handleSubmit(onSubmit)}>
       <Flex gap={12} justifyContent={'center'} minH={'600px'}>
@@ -94,18 +96,21 @@ export const ProductDetail = (props: any) => {
               </HStack>
               <PriceTag salePrice={product.sale_price} price={product.origin_price} currency='VND' />
               <Box fontSize='md' fontWeight={'light'}>
-                <Text as={'span'} fontWeight={'medium'}>Thương hiệu:</Text> {product.category_name}
+                <Text as={'span'} fontWeight={'medium'}>
+                  Thương hiệu:
+                </Text>{' '}
+                {product.category_name}
               </Box>
               <Box fontSize='md' fontWeight={'light'}>
                 <Text pt={'10px'}>Mô tả sản phẩm</Text>
                 {product.description_detail}
               </Box>
-                <Box fontSize='md' fontWeight={'light'}>
-                  <Text as={'span'} fontWeight={'bold'} pt={'10px'} pr={'10px'}>
-                    Tồn kho:
-                  </Text>
-                  {product.stock}
-                </Box>
+              <Box fontSize='md' fontWeight={'light'}>
+                <Text as={'span'} fontWeight={'bold'} pt={'10px'} pr={'10px'}>
+                  Tồn kho:
+                </Text>
+                {product.stock}
+              </Box>
               {product.master_fields.length > 0 && (
                 <>
                   <Text textTransform={'capitalize'} fontSize='md'>

@@ -74,6 +74,8 @@ export const ProductDetailPage = () => {
       })
   }, [currentPage, limit, createdComment])
 
+  console.log(masterField)
+
   return (
     <>
       <DefaultLayout>

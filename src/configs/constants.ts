@@ -19,7 +19,7 @@ export const PAYMENT_METHOD = {
 export const ORDER_STATUS_OBJECT = [
   {
     id: 1,
-    name: 'Đang chờ thanh toán'
+    name: 'Chờ xác nhận'
   },
   {
     id: 2,
@@ -47,7 +47,7 @@ export const ORDER_STATUS = {
   CANCELLED: 5
 }
 
-export const ORDER_STATUS_TEXT = ['', 'Đang chờ thanh toán', 'Đã xác nhận', 'Đang giao hàng', 'Đã giao hàng', 'Đã hủy']
+export const ORDER_STATUS_TEXT = ['', 'Chờ xác nhận', 'Đã xác nhận', 'Đang giao hàng', 'Đã giao hàng', 'Đã hủy']
 
 export const ORDER_STATUS_COLOR = ['', 'orange.300', 'primary', 'teal.300', 'green.300', 'red.600']
 
